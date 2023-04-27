@@ -5,7 +5,7 @@ import PackageDescription
 
 let package = Package(
     name: "PSCore",
-    platforms: [.iOS(.v13), .macOS(.v12), .tvOS(.v13), .watchOS(.v7)],
+    platforms: [.iOS(.v15), .macOS(.v12), .tvOS(.v13), .watchOS(.v7)],
     products: [
         .library(
             name: "PSCore",

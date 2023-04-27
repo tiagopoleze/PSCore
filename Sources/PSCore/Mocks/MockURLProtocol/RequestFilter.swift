@@ -80,10 +80,17 @@ extension RequestFilters {
             let receivedPathComponents = pathComponents.split(separator: "/").map { String($0) }
             if receivedPathComponents.count > requestPathComponents.count { return false }
             guard let firstReceivedPathComponent = receivedPathComponents.first,
-                  let indexRequestPathComponents = requestPathComponents.firstIndex(where: { $0 == firstReceivedPathComponent }) else { return false }
+                  let indexRequestPathComponents = requestPathComponents
+                .firstIndex(where: {
+                    $0 == firstReceivedPathComponent
+                }) else { return false }
             for indexReceivedPathComponents in 1..<receivedPathComponents.count {
-                if indexReceivedPathComponents + indexRequestPathComponents >= requestPathComponents.count { return false }
-                if receivedPathComponents[indexReceivedPathComponents] != requestPathComponents[indexReceivedPathComponents + indexRequestPathComponents] { return false }
+                if indexReceivedPathComponents + indexRequestPathComponents >= requestPathComponents.count {
+                    return false
+                }
+                // swiftlint:disable:next line_length
+                if receivedPathComponents[indexReceivedPathComponents] != requestPathComponents[indexReceivedPathComponents + indexRequestPathComponents] { return false
+                }
             }
             return true
         }
