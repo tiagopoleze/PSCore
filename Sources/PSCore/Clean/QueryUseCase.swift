@@ -9,7 +9,7 @@ open class QueryUseCase<
     Input: DTOInput,
     Output: DTOOutput,
     UseCaseQuery: Query
->: UseCase where UseCaseQuery.Output == Output {
+>: UseCase where UseCaseQuery.Output == Output, UseCaseQuery.ID == Input.ID {
     private let useCase: UseCaseQuery
     private let validations: [Validation]
 

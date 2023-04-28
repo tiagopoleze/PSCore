@@ -9,7 +9,7 @@ open class DeleteUseCase<
     Input: DTOInput,
     Output: DTOOutput,
     UseCaseDelete: Delete
->: UseCase where UseCaseDelete.Output == Output {
+>: UseCase where UseCaseDelete.Output == Output, UseCaseDelete.ID == Input.ID {
     private let useCase: UseCaseDelete
     private let validations: [Validation]
 

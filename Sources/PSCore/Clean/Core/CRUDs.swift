@@ -11,8 +11,10 @@ public protocol Create {
 }
 
 public protocol Query {
+    // swiftlint:disable:next type_name
+    associatedtype ID: Identificator
     associatedtype Output
-    func query(identifier: ObjectIdentifier) async throws -> Output
+    func query(identifier: ID) async throws -> Output
 }
 
 public protocol Read {
@@ -23,10 +25,14 @@ public protocol Read {
 
 public protocol Update {
     associatedtype Input
-    @discardableResult func update(identifier: ObjectIdentifier, input: Input) async throws -> Bool
+    // swiftlint:disable:next type_name
+    associatedtype ID: Identificator
+    @discardableResult func update(identifier: ID, input: Input) async throws -> Bool
 }
 
 public protocol Delete {
     associatedtype Output
-    @discardableResult func delete(identifier: ObjectIdentifier) async throws -> Output
+    // swiftlint:disable:next type_name
+    associatedtype ID: Identificator
+    @discardableResult func delete(identifier: ID) async throws -> Output
 }
