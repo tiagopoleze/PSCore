@@ -15,7 +15,7 @@ open class CreateUseCase<Input: DTOInput, Output: DTOOutput>: UseCase where Outp
     }
 
     open func execute(input: Input?) async throws -> Output {
-        guard let input else { throw UseCaseError.isNil(String(describing: input)) }
+        guard let input else { throw UseCaseError.isNil(String(describing: Input.self)) }
         for validation in validations {
             let result = try await validation.validate()
             if !result { throw UseCaseError.validation(String(describing: validation)) }
