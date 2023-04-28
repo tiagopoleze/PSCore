@@ -8,25 +8,16 @@
 import Combine
 import Foundation
 
-public protocol CombineFetch {
-    func fetch<T: Decodable, S: Scheduler>(
-        _ url: URL,
-        decoder: JSONDecoder,
-        scheduler: S,
-        ofType: T.Type
-    ) -> AnyPublisher<T, Error>
-}
-
-extension URLSession: CombineFetch {
-    public func fetch<T: Decodable, S: Scheduler>(
-        _ url: URL,
+extension URLSession {
+    public func createPublisher<T: Decodable, S: Scheduler>(
+        _ request: URLRequest,
+        type: T.Type,
         decoder: JSONDecoder = .init(),
-        scheduler: S = DispatchQueue.main,
-        ofType: T.Type
+        scheduler: S = DispatchQueue.main
     ) -> AnyPublisher<T, Error> {
         URLSession
             .shared
-            .dataTaskPublisher(for: url)
+            .dataTaskPublisher(for: request)
             .retry(1)
             .tryMap {
                 guard let httpResponse = $0.response as? HTTPURLResponse,

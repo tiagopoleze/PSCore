@@ -9,8 +9,9 @@ import XCTest
 @testable import PSCore
 
 class MockURLRequestTest: XCTestCase {
-    func testMock() async throws {
+    func testMock() async {
         URLSessionConfiguration.swizzleMockURLProtocol = true
+        let session = URLSession(configuration: URLSessionConfiguration.default)
         let urlString = "https://tiagopoleze.io"
         let url = URL(string: urlString)!
         let response = HTTPURLResponse(
@@ -19,11 +20,16 @@ class MockURLRequestTest: XCTestCase {
             httpVersion: nil,
             headerFields: nil
         )
-        MockURLProtocol.addResponse(for: RequestFilters.url(urlString), response: response, delay: 10)
+        MockURLProtocol.addResponse(
+            for: RequestFilters.url(urlString),
+            response: response,
+            data: Bundle.module.decode(Person.self, from: "person.json")?.encode(),
+            delay: 5
+        )
         let request = URLRequest(url: url)
-        let (_, urlResponse) = try await URLSession.shared.data(for: request)
-        guard let httpURLResponse = urlResponse as? HTTPURLResponse else { return }
-        XCTAssertEqual(httpURLResponse.statusCode, 200)
+        let task = session.createTask(request, type: Person.self)
+        let value = try? await task.value
+        XCTAssertEqual(value?.firstName, "Tiago")
     }
 }
 

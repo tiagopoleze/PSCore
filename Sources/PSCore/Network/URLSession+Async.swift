@@ -7,17 +7,8 @@
 
 import Foundation
 
-public protocol ConcurrencyFetch {
-    func fetch<T: Decodable>(
-        _ request: URLRequest,
-        type: T.Type,
-        decoder: JSONDecoder,
-        delegate: URLSessionTaskDelegate?
-    ) -> Task<T, Error>
-}
-
-extension URLSession: ConcurrencyFetch {
-    public func fetch<T: Decodable>(
+extension URLSession {
+    public func createTask<T: Decodable>(
         _ request: URLRequest,
         type: T.Type,
         decoder: JSONDecoder = .init(),
