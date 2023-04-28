@@ -9,7 +9,7 @@ open class CreateUseCase<
     Input: DTOInput,
     Output: DTOOutput,
     UseCaseCreate: Create
->: UseCase where Output.Input == Input, UseCaseCreate.Input == Input {
+>: UseCase where Output.Input == Input, UseCaseCreate.InputCreate == Input {
     private let useCase: UseCaseCreate
     private let validations: [Validation]
 

@@ -9,7 +9,7 @@ open class ReadUseCase<
     Input: DTOInput,
     Output: DTOOutput,
     UseCaseRead: Read
->: UseCase where Output.Input == Input, UseCaseRead.Input == Input, UseCaseRead.Output == Output {
+>: UseCase where Output.Input == Input, UseCaseRead.InputRead == Input, UseCaseRead.OutputRead == Output {
     private let useCase: UseCaseRead
     private let validations: [Validation]
 

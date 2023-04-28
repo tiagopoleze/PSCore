@@ -9,7 +9,7 @@ open class UpdateUseCase<
     Input: DTOInput,
     Output: DTOOutput,
     UseCaseUpdate: Update
->: UseCase where Output.Input == Input, UseCaseUpdate.Input == Input, UseCaseUpdate.ID == Input.ID {
+>: UseCase where Output.Input == Input, UseCaseUpdate.InputUpdate == Input, UseCaseUpdate.ID == Input.ID {
     private let useCase: UseCaseUpdate
     private let validations: [Validation]
 

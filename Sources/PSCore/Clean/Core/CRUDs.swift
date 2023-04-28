@@ -6,33 +6,33 @@
 //
 
 public protocol Create {
-    associatedtype Input
-    @discardableResult func create(input: Input) async throws -> Bool
+    associatedtype InputCreate
+    @discardableResult func create(input: InputCreate) async throws -> Bool
 }
 
 public protocol Query {
     // swiftlint:disable:next type_name
     associatedtype ID: Identificator
-    associatedtype Output
-    func query(identifier: ID) async throws -> Output
+    associatedtype OutputQuery
+    func query(identifier: ID) async throws -> OutputQuery
 }
 
 public protocol Read {
-    associatedtype Input
-    associatedtype Output
-    func read(input: Input) async throws -> Output
+    associatedtype InputRead
+    associatedtype OutputRead
+    func read(input: InputRead) async throws -> OutputRead
 }
 
 public protocol Update {
-    associatedtype Input
+    associatedtype InputUpdate
     // swiftlint:disable:next type_name
     associatedtype ID: Identificator
-    @discardableResult func update(identifier: ID, input: Input) async throws -> Bool
+    @discardableResult func update(identifier: ID, input: InputUpdate) async throws -> Bool
 }
 
 public protocol Delete {
-    associatedtype Output
+    associatedtype OutputDelete
     // swiftlint:disable:next type_name
     associatedtype ID: Identificator
-    @discardableResult func delete(identifier: ID) async throws -> Output
+    @discardableResult func delete(identifier: ID) async throws -> OutputDelete
 }
