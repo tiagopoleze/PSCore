@@ -8,5 +8,5 @@
 public enum UseCaseError: Error {
     case isNil(String)
     case validation(String)
-    case repository(action: String)
+    case repository(String)
 }
