@@ -10,6 +10,7 @@ import Foundation
 public protocol ConcurrencyFetch {
     func fetch<T: Decodable>(
         _ request: URLRequest,
+        type: T.Type,
         decoder: JSONDecoder,
         delegate: URLSessionTaskDelegate?
     ) -> Task<T, Error>
@@ -18,7 +19,8 @@ public protocol ConcurrencyFetch {
 extension URLSession: ConcurrencyFetch {
     public func fetch<T: Decodable>(
         _ request: URLRequest,
-        decoder: JSONDecoder,
+        type: T.Type,
+        decoder: JSONDecoder = .init(),
         delegate: URLSessionTaskDelegate? = nil
     ) -> Task<T, Error> {
         Task {
