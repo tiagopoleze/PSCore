@@ -12,7 +12,7 @@ public protocol ConcurrencyFetch {
         _ request: URLRequest,
         decoder: JSONDecoder,
         delegate: URLSessionTaskDelegate?
-    ) async throws -> T
+    ) -> Task<T, Error>
 }
 
 extension URLSession: ConcurrencyFetch {
@@ -20,14 +20,15 @@ extension URLSession: ConcurrencyFetch {
         _ request: URLRequest,
         decoder: JSONDecoder,
         delegate: URLSessionTaskDelegate? = nil
-    ) async throws -> T {
+    ) -> Task<T, Error> {
+        Task {
+            let (decodable, response) = try await data(for: request, delegate: delegate)
+            guard let httpResponse = response as? HTTPURLResponse,
+                  (200...299).contains(httpResponse.statusCode) else {
+                throw URLError(.badServerResponse)
+            }
 
-        let (decodable, response) = try await data(for: request, delegate: delegate)
-        guard let httpResponse = response as? HTTPURLResponse,
-              (200...299).contains(httpResponse.statusCode) else {
-            throw URLError(.badServerResponse)
+            return try decoder.decode(T.self, from: decodable)
         }
-
-        return try decoder.decode(T.self, from: decodable)
     }
 }

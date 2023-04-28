@@ -9,9 +9,9 @@ import Foundation
 
 public enum HTTPMethod {
     case get
-    case post(body: Data?)
-    case put(body: Data?)
-    case patch(body: Data?)
+    case post(body: Encodable?)
+    case put(body: Encodable?)
+    case patch(body: Encodable?)
     case delete
 
     var httpMethod: String {
@@ -26,9 +26,9 @@ public enum HTTPMethod {
 
     var body: Data? {
         switch self {
-        case .post(let body): return body
-        case .put(let body): return body
-        case .patch(let body): return body
+        case .post(let body): return body?.encode()
+        case .put(let body): return body?.encode()
+        case .patch(let body): return body?.encode()
         case .delete, .get: return nil
         }
     }
