@@ -6,21 +6,27 @@
 //
 
 public protocol Create {
-    @discardableResult func create<Input>(input: Input) async throws -> Bool
+    associatedtype Input
+    @discardableResult func create(input: Input) async throws -> Bool
 }
 
 public protocol Query {
-    func query<Output>(identifier: ObjectIdentifier) async throws -> Output
+    associatedtype Output
+    func query(identifier: ObjectIdentifier) async throws -> Output
 }
 
 public protocol Read {
-    func read<Input, Output>(input: Input) async throws -> Output
+    associatedtype Input
+    associatedtype Output
+    func read(input: Input) async throws -> Output
 }
 
 public protocol Update {
-    @discardableResult func update<Input>(identifier: ObjectIdentifier, input: Input) async throws -> Bool
+    associatedtype Input
+    @discardableResult func update(identifier: ObjectIdentifier, input: Input) async throws -> Bool
 }
 
 public protocol Delete {
-    @discardableResult func delete<Output>(identifier: ObjectIdentifier) async throws -> Output
+    associatedtype Output
+    @discardableResult func delete(identifier: ObjectIdentifier) async throws -> Output
 }

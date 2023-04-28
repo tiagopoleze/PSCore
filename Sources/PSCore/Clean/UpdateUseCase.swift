@@ -5,11 +5,15 @@
 //  Created by Tiago Ferreira on 28/04/2023.
 //
 
-open class UpdateUseCase<Input: DTOInput, Output: DTOOutput>: UseCase where Output.Input == Input {
-    private let useCase: Update
+open class UpdateUseCase<
+    Input: DTOInput,
+    Output: DTOOutput,
+    UseCaseUpdate: Update
+>: UseCase where Output.Input == Input, UseCaseUpdate.Input == Input {
+    private let useCase: UseCaseUpdate
     private let validations: [Validation]
 
-    public init(useCase: Update, validations: [Validation]) {
+    public init(useCase: UseCaseUpdate, validations: [Validation]) {
         self.useCase = useCase
         self.validations = validations
     }

@@ -5,11 +5,15 @@
 //  Created by Tiago Ferreira on 28/04/2023.
 //
 
-open class ReadUseCase<Input: DTOInput, Output: DTOOutput>: UseCase where Output.Input == Input {
-    private let useCase: Read
+open class ReadUseCase<
+    Input: DTOInput,
+    Output: DTOOutput,
+    UseCaseRead: Read
+>: UseCase where Output.Input == Input, UseCaseRead.Input == Input, UseCaseRead.Output == Output {
+    private let useCase: UseCaseRead
     private let validations: [Validation]
 
-    public init(useCase: Read, validations: [Validation]) {
+    public init(useCase: UseCaseRead, validations: [Validation]) {
         self.useCase = useCase
         self.validations = validations
     }

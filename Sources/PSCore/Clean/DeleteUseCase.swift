@@ -5,11 +5,15 @@
 //  Created by Tiago Ferreira on 28/04/2023.
 //
 
-open class DeleteUseCase<Input: DTOInput, Output: DTOOutput>: UseCase {
-    private let useCase: Delete
+open class DeleteUseCase<
+    Input: DTOInput,
+    Output: DTOOutput,
+    UseCaseDelete: Delete
+>: UseCase where UseCaseDelete.Output == Output {
+    private let useCase: UseCaseDelete
     private let validations: [Validation]
 
-    public init(useCase: Delete, validations: [Validation]) {
+    public init(useCase: UseCaseDelete, validations: [Validation]) {
         self.useCase = useCase
         self.validations = validations
     }

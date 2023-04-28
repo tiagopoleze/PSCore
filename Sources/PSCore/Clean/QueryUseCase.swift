@@ -5,11 +5,15 @@
 //  Created by Tiago Ferreira on 28/04/2023.
 //
 
-open class QueryUseCase<Input: DTOInput, Output: DTOOutput>: UseCase {
-    private let useCase: Query
+open class QueryUseCase<
+    Input: DTOInput,
+    Output: DTOOutput,
+    UseCaseQuery: Query
+>: UseCase where UseCaseQuery.Output == Output {
+    private let useCase: UseCaseQuery
     private let validations: [Validation]
 
-    public init(useCase: Query, validations: [Validation]) {
+    public init(useCase: UseCaseQuery, validations: [Validation]) {
         self.useCase = useCase
         self.validations = validations
     }

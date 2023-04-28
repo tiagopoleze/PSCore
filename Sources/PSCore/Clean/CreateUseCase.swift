@@ -5,11 +5,15 @@
 //  Created by Tiago Ferreira on 28/04/2023.
 //
 
-open class CreateUseCase<Input: DTOInput, Output: DTOOutput>: UseCase where Output.Input == Input {
-    private let useCase: Create
+open class CreateUseCase<
+    Input: DTOInput,
+    Output: DTOOutput,
+    UseCaseCreate: Create
+>: UseCase where Output.Input == Input, UseCaseCreate.Input == Input {
+    private let useCase: UseCaseCreate
     private let validations: [Validation]
 
-    public init(useCase: Create, validations: [Validation]) {
+    public init(useCase: UseCaseCreate, validations: [Validation]) {
         self.useCase = useCase
         self.validations = validations
     }
