@@ -5,7 +5,7 @@
 //  Created by Tiago Ferreira on 28/04/2023.
 //
 
-public class QueryUseCase<Input: DTOInput, Output: DTOOutput>: UseCase {
+open class QueryUseCase<Input: DTOInput, Output: DTOOutput>: UseCase {
     private let useCase: Query
     private let validations: [Validation]
 
@@ -14,7 +14,7 @@ public class QueryUseCase<Input: DTOInput, Output: DTOOutput>: UseCase {
         self.validations = validations
     }
 
-    public func execute(input: Input?) async throws -> Output {
+    open func execute(input: Input?) async throws -> Output {
         guard let input else { throw UseCaseError.isNil(String(describing: input)) }
         for validation in validations {
             let result = try await validation.validate()

@@ -5,7 +5,7 @@
 //  Created by Tiago Ferreira on 28/04/2023.
 //
 
-public class UpdateUseCase<Input: DTOInput, Output: DTOOutput>: UseCase where Output.Input == Input {
+open class UpdateUseCase<Input: DTOInput, Output: DTOOutput>: UseCase where Output.Input == Input {
     private let useCase: Update
     private let validations: [Validation]
 
@@ -14,7 +14,7 @@ public class UpdateUseCase<Input: DTOInput, Output: DTOOutput>: UseCase where Ou
         self.validations = validations
     }
 
-    public func execute(input: Input?) async throws -> Output {
+    open func execute(input: Input?) async throws -> Output {
         guard let input else { throw UseCaseError.isNil(String(describing: input)) }
         for validation in validations {
             let result = try await validation.validate()
