@@ -14,7 +14,7 @@ final class BundleDecodeTests: XCTestCase {
         XCTAssertThrowsError(try Bundle.module.decode(String.self, from: "here.json"))
 
         guard let person = try? Bundle.module.decode(Person.self, from: "person.json") else {
-            XCTFail()
+            XCTFail("Should always have this file.")
             return
         }
 

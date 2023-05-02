@@ -14,7 +14,8 @@ analyzer_rules:
   - explicit_self
 
 included:
-  - Source
+  - Sources/
+  - Tests/
 excluded:
   - .build/
 

@@ -39,7 +39,7 @@ class CleanTests: XCTestCase {
                 let deleteDTOOutput = try await deleteUseCase.execute(input: deleteDTOInput)
                 XCTAssertEqual(deleteDTOOutput.deletedList?.title, list.title)
                 XCTAssertFalse(listMemoryRepository.lists.count == 1)
-                XCTAssertTrue(listMemoryRepository.lists.count == 0)
+                XCTAssertTrue(listMemoryRepository.lists.isEmpty)
             } catch {
                 XCTFail(error.localizedDescription)
             }

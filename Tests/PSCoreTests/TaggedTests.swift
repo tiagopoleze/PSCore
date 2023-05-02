@@ -81,6 +81,7 @@ final class TaggedTests: XCTestCase {
     func testCodingKeyRepresentable() {
         if #available(macOS 12.3, iOS 15.4, watchOS 8.5, tvOS 15.4, *) {
             enum Key {}
+            // swiftlint:disable:next identifier_name
             let xs: [Tagged<Key, String>: String] = [Tagged("Hello"): "World"]
             XCTAssertEqual(
                 String(decoding: try JSONEncoder().encode(xs), as: UTF8.self),
@@ -160,6 +161,7 @@ final class TaggedTests: XCTestCase {
     }
 
     func testMap() {
+        // swiftlint:disable:next identifier_name
         let x: Tagged<Tag, Int> = 1
         XCTAssertEqual("1!", x.map { "\($0)!" })
     }
@@ -169,15 +171,15 @@ final class TaggedTests: XCTestCase {
             let val1: String = "val1"
             let val2: Int = 1
         }
-
+        // swiftlint:disable:next identifier_name
         let x: Tagged<Tag, MyStruct> = Tagged(rawValue: MyStruct())
         XCTAssertEqual("val1", x.val1)
         XCTAssertEqual(1, x.val2)
     }
 
     func testOptionalRawTypeAndNilValueDecodesCorrectly() {
-        // swiftlint:disable:next nesting
         struct Container: Decodable {
+            // swiftlint:disable:next nesting
             typealias Identifier = Tagged<Container, String?>
             let id: Identifier
         }
@@ -191,8 +193,8 @@ final class TaggedTests: XCTestCase {
     }
 
     func testOptionalRawTypeAndNilValueEncodesCorrectly() {
-        // swiftlint:disable:next nesting
         struct Container: Encodable {
+            // swiftlint:disable:next nesting
             typealias Identifier = Tagged<Container, String?>
             let id: Identifier
         }
@@ -216,6 +218,7 @@ final class TaggedTests: XCTestCase {
     }
 
     func testCollection() {
+        // swiftlint:disable:next identifier_name
         let x: Tagged<Tag, [Int]> = .init(rawValue:[-1, -3, 57, 43])
         XCTAssertFalse(x.isEmpty)
         XCTAssertTrue(x.contains(57))
@@ -223,9 +226,11 @@ final class TaggedTests: XCTestCase {
     }
 
     func testCoerce() {
+        // swiftlint:disable:next identifier_name
         let x: Tagged<Tag, Int> = 1
 
         enum Tag2 {}
+        // swiftlint:disable:next identifier_name
         let x2: Tagged<Tag2, Int> = x.coerced(to: Tag2.self)
 
         XCTAssertEqual(1, x2.rawValue)
