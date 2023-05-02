@@ -10,7 +10,7 @@ let package = Package(
         .library(
             name: "PSCore",
             targets: ["PSCore"]
-        ),
+        )
     ],
     dependencies: [
         .package(url: "https://github.com/realm/SwiftLint", branch: "main")
@@ -27,6 +27,6 @@ let package = Package(
             resources: [
                 .process("Resources/person.json")
             ]
-        ),
+        )
     ]
 )

@@ -37,7 +37,8 @@ class ChainOfResponsibilityTests: XCTestCase {
             $0 == 7
         }
         XCTAssertThrowsError(try third.execute(input: 5)) { error in
-            XCTAssertEqual(error as? ChainOfResponsibilityError, ChainOfResponsibilityError.noEqualChainOfResponsibility)
+            XCTAssertEqual(error as? ChainOfResponsibilityError,
+                           ChainOfResponsibilityError.noEqualChainOfResponsibility)
         }
     }
 }
