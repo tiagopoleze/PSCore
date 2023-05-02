@@ -5,11 +5,14 @@
 //  Created by Tiago Ferreira on 28/04/2023.
 //
 
+/// An open class to use to easily query anything
 open class QueryUseCase<
     Input: DTOInput,
     Output: DTOOutput,
     UseCaseQuery: Query
->: UseCase where UseCaseQuery.OutputQuery == Output, UseCaseQuery.ID == Input.ID {
+>: UseCase where UseCaseQuery.OutputQuery == Output,
+                 UseCaseQuery.InputQuery.ID == Input.ID,
+                 UseCaseQuery.InputQuery == Input {
     private let useCase: UseCaseQuery
     private let validations: [Validation]
 
@@ -24,7 +27,6 @@ open class QueryUseCase<
             let isValid = try await validation.validate()
             if !isValid { throw UseCaseError.validation(String(describing: "\(self).\(validations)")) }
         }
-
-        return try await useCase.query(identifier: input.id)
+        return try await useCase.query(input: input)
     }
 }

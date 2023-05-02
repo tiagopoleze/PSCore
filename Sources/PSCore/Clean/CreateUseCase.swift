@@ -5,13 +5,15 @@
 //  Created by Tiago Ferreira on 28/04/2023.
 //
 
+/// An open class to use to easily create anything
 open class CreateUseCase<
     Input: DTOInput,
     Output: DTOOutput,
     UseCaseCreate: Create
->: UseCase where Output.Input == Input, UseCaseCreate.InputCreate == Input {
-    private let useCase: UseCaseCreate
-    private let validations: [Validation]
+>: UseCase where UseCaseCreate.InputCreate == Input,
+                 UseCaseCreate.OutputCreate == Output {
+    let useCase: UseCaseCreate
+    let validations: [Validation]
 
     public init(useCase: UseCaseCreate, validations: [Validation]) {
         self.useCase = useCase
@@ -24,8 +26,6 @@ open class CreateUseCase<
             let isValid = try await validation.validate()
             if !isValid { throw UseCaseError.validation(String(describing: "\(self).\(validations)")) }
         }
-        let result = try await useCase.create(input: input)
-        if !result { throw UseCaseError.repository("\(self).useCase.create(input:)")}
-        return Output(input: input)
+        return try await useCase.create(input: input)
     }
 }

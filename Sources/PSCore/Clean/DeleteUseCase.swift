@@ -5,11 +5,14 @@
 //  Created by Tiago Ferreira on 28/04/2023.
 //
 
+/// An open class to use to easily delete anything
 open class DeleteUseCase<
     Input: DTOInput,
     Output: DTOOutput,
     UseCaseDelete: Delete
->: UseCase where UseCaseDelete.OutputDelete == Output, UseCaseDelete.ID == Input.ID {
+>: UseCase where UseCaseDelete.OutputDelete == Output,
+                 UseCaseDelete.InputDelete.ID == Input.ID,
+                 UseCaseDelete.InputDelete == Input {
     private let useCase: UseCaseDelete
     private let validations: [Validation]
 
@@ -25,6 +28,6 @@ open class DeleteUseCase<
             if !isValid { throw UseCaseError.validation(String(describing: "\(self).\(validations)")) }
         }
 
-        return try await useCase.delete(identifier: input.id)
+        return try await useCase.delete(input: input)
     }
 }

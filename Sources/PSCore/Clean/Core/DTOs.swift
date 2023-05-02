@@ -7,12 +7,15 @@
 
 import Foundation
 
+/// The Input DTO
 public protocol DTOInput: CustomStringConvertible {
     // swiftlint:disable:next type_name
     associatedtype ID: Identificator
     var id: ID { get }
 }
+
+/// The Output DTO
 public protocol DTOOutput {
-    associatedtype Input: DTOInput
+    associatedtype Input
     init(input: Input)
 }

@@ -64,15 +64,16 @@ class ListMemoryRepository {
 }
 
 extension ListMemoryRepository: Create {
-    func create(input: CreateListDTOInput) async throws -> Bool {
-        lists.append(List(id: input.id, title: input.title))
-        return true
+    func create(input: CreateListDTOInput) async throws -> CreateListDTOOutput {
+        let list = List(id: input.id, title: input.title)
+        lists.append(list)
+        return CreateListDTOOutput(input: input)
     }
 }
 
 extension ListMemoryRepository: Query {
-    func query(identifier: UUID) async throws -> QueryListDTOOutput {
-        if let list = lists.first(where: { $0.id == identifier }) {
+    func query(input: QueryListDTOInput) async throws -> QueryListDTOOutput {
+        if let list = lists.first(where: { $0.id == input.id }) {
             return QueryListDTOOutput(list: list)
         }
 
@@ -81,21 +82,21 @@ extension ListMemoryRepository: Query {
 }
 
 extension ListMemoryRepository: Update {
-    func update(identifier: UUID, input: UpdateListMemoryDTOInput) async throws -> Bool {
-        if let index = lists.firstIndex(where: { $0.id == identifier }) {
+    func update(input: UpdateListMemoryDTOInput) async throws -> UpdateListMemoryDTOOutput {
+        if let index = lists.firstIndex(where: { $0.id == input.id }) {
             lists[index] = input.newList
-            return true
+            return UpdateListMemoryDTOOutput(input: lists[index])
         }
-        return false
+        throw UseCaseError.isNil("No list item")
     }
 }
 
 extension ListMemoryRepository: Delete {
-    func delete(identifier: UUID) async throws -> DeleteListMemoryDTOOutput {
-        if let index = lists.firstIndex(where: { $0.id == identifier }) {
+    func delete(input: DeleteListMemoryDTOInput) async throws -> DeleteListMemoryDTOOutput {
+        if let index = lists.firstIndex(where: { $0.id == input.id }) {
             return DeleteListMemoryDTOOutput(list: lists.remove(at: Int(index)))
         }
-        throw NSError(domain: "Could not found List", code: 404)
+        throw UseCaseError.isNil("No list item")
     }
 }
 
@@ -114,7 +115,7 @@ struct CreateListDTOOutput: DTOOutput {
     let list: List
 
     init(input: CreateListDTOInput) {
-        list = List(id: input.id, title: input.title)
+        self.list = List(id: input.id, title: input.title)
     }
 }
 
@@ -157,8 +158,8 @@ struct UpdateListMemoryDTOInput: DTOInput {
 struct UpdateListMemoryDTOOutput: DTOOutput {
     let updatedList: List
 
-    init(input: UpdateListMemoryDTOInput) {
-        updatedList = input.newList
+    init(input: List) {
+        updatedList = input
     }
 }
 

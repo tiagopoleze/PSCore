@@ -5,11 +5,14 @@
 //  Created by Tiago Ferreira on 28/04/2023.
 //
 
+/// An open class to use to easily read anything
 open class ReadUseCase<
     Input: DTOInput,
     Output: DTOOutput,
     UseCaseRead: Read
->: UseCase where Output.Input == Input, UseCaseRead.InputRead == Input, UseCaseRead.OutputRead == Output {
+>: UseCase where Output.Input == Input,
+                 UseCaseRead.InputRead == Input,
+                 UseCaseRead.OutputRead == Output {
     private let useCase: UseCaseRead
     private let validations: [Validation]
 

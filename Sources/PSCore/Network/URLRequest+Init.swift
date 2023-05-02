@@ -8,6 +8,14 @@
 import Foundation
 
 public extension URLRequest {
+    /// An easier inittialiser to URLRequest
+    /// - Parameters:
+    ///   - url: the url needed to create the request
+    ///   - cachePolicy: the cache policy used. `default`: useProtocolCachePolicy
+    ///   - timeoutInterval: the timeout of the request. `default`: 60.0
+    ///   - headers: the headers of the request
+    ///   - method: method used. `default`: get
+    ///   - authenticationType: The authentication if needed
     init(
         url: URL,
         cachePolicy: CachePolicy = .useProtocolCachePolicy,
