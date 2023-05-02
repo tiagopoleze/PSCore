@@ -23,7 +23,7 @@ class MockURLRequestTest: XCTestCase {
         MockURLProtocol.addResponse(
             for: RequestFilters.url(urlString),
             response: response,
-            data: Bundle.module.decode(Person.self, from: "person.json")?.encode(),
+            data: try? Bundle.module.decode(Person.self, from: "person.json").encode(),
             delay: 5
         )
         let request = URLRequest(url: url)

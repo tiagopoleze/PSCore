@@ -11,10 +11,9 @@ import XCTest
 final class BundleDecodeTests: XCTestCase {
     func testBundle() {
         Logging.level = .debug
-        let here = Bundle.main.decode(String.self, from: "here.json")
-        XCTAssertNil(here)
+        XCTAssertThrowsError(try Bundle.main.decode(String.self, from: "here.json"))
 
-        guard let person = Bundle.module.decode(Person.self, from: "person.json") else {
+        guard let person = try? Bundle.module.decode(Person.self, from: "person.json") else {
             XCTFail()
             return
         }

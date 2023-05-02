@@ -13,12 +13,12 @@ public extension Bundle {
         from file: String,
         dateDecodingStrategy: JSONDecoder.DateDecodingStrategy = .deferredToDate,
         keyDecodingStrategy: JSONDecoder.KeyDecodingStrategy = .useDefaultKeys
-    ) -> T? {
+    ) throws -> T {
         guard let url = self.url(forResource: file, withExtension: nil) else {
-            return createError("Failed to locate \(file) in bundle.")
+            throw BundleDecodeError.noValidURL("Failed to locate \(file) in bundle.")
         }
         guard let data = try? Data(contentsOf: url) else {
-            return createError("Failed to load \(file) in bundle")
+            throw BundleDecodeError.noContentTo(url)
         }
 
         let decoder = JSONDecoder()
@@ -29,22 +29,27 @@ public extension Bundle {
             return try decoder.decode(T.self, from: data)
         } catch DecodingError.keyNotFound(let key, let context) {
             // swiftlint:disable:next line_length
-            return createError("Failed to decode \(file) from bundle due to missing key '\(key.stringValue) - \(context.debugDescription)")
-        } catch DecodingError.typeMismatch(_, let context) {
+            print("Failed to decode \(file) from bundle due to missing key '\(key.stringValue) - \(context.debugDescription)", logLevel: .error)
+            throw DecodingError.keyNotFound(key, context)
+        } catch DecodingError.typeMismatch(let key, let context) {
             // swiftlint:disable:next line_length
-            return createError("Failed to decode \(file) from bundle due to type mismatch - \(context.debugDescription)")
+            print("Failed to decode \(file) from bundle due to type mismatch - \(context.debugDescription)", logLevel: .error)
+            throw DecodingError.typeMismatch(key, context)
         } catch DecodingError.valueNotFound(let type, let context) {
             // swiftlint:disable:next line_length
-            return createError("Failed to decode \(file) from bundle due to missing \(type) value - \(context.debugDescription)")
-        } catch DecodingError.dataCorrupted(_) {
-            return createError("Failed to decode \(file) from bundle because it appears to be invalid JSON.")
+            print("Failed to decode \(file) from bundle due to missing \(type) value - \(context.debugDescription)", logLevel: .error)
+            throw DecodingError.valueNotFound(type, context)
+        } catch DecodingError.dataCorrupted(let error) {
+            print("Failed to decode \(file) from bundle because it appears to be invalid JSON.", logLevel: .error)
+            throw DecodingError.dataCorrupted(error)
         } catch {
-            return createError("Failed to decode \(file) from bundle: \(error.localizedDescription)")
+            print("Failed to decode \(file) from bundle: \(error.localizedDescription)", logLevel: .error)
+            throw error
         }
     }
+}
 
-    private func createError<T>(_ string: String) -> T? {
-        print(string, logLevel: .error)
-        return nil
-    }
+public enum BundleDecodeError: Error {
+    case noValidURL(String)
+    case noContentTo(URL)
 }
