@@ -11,9 +11,17 @@ on:
 
 jobs:
   build:
-    runs-on: macos-latest
+    name: Swift ${{ matrix.swift }} on ${{ matrix.os }}
+    strategy: 
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+        swift: ["5.8"]
+    runs-on: ${{ matrix.os }}
 
     steps:
+    - uses: fwal/setup-swift
+      with: 
+        swift-version: ${{ matrix.swift }}
     - uses: actions/checkout@v3
     - name: Build
       run: swift build -v
