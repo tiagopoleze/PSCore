@@ -20,7 +20,11 @@ public struct ChainOfResponsibility<Input, Output>: ChainingOfResponsibility {
     public let result: (Input) -> Output
     public let next: (any ChainingOfResponsibility)?
 
-    public init(next: (any ChainingOfResponsibility)? = nil, condition: @escaping (Input) -> Bool, result: @escaping (Input) -> Output) {
+    public init(
+        next: (any ChainingOfResponsibility)? = nil,
+        condition: @escaping (Input) -> Bool,
+        result: @escaping (Input) -> Output
+    ) {
         self.next = next
         self.condition = condition
         self.result = result
@@ -29,7 +33,9 @@ public struct ChainOfResponsibility<Input, Output>: ChainingOfResponsibility {
     public func execute(input: Input) throws -> Output {
         if condition(input) { return result(input) }
         guard let next else { throw ChainOfResponsibilityError.noNextCase }
-        guard let next = next as? ChainOfResponsibility<Input, Output> else { throw ChainOfResponsibilityError.noEqualChainOfResponsibility }
+        guard let next = next as? ChainOfResponsibility<Input, Output> else {
+            throw ChainOfResponsibilityError.noEqualChainOfResponsibility
+        }
         return try next.execute(input: input)
     }
 }
