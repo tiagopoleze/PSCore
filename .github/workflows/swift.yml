@@ -31,5 +31,3 @@ jobs:
       run: swift build -v
     - name: Run tests
       run: swift test -v
-    - name: Generate XCFramework
-      run: xcodebuild -scheme PSCore -sdk iphoneos -configuration Release ARCHS=”arm64" BUILD_DIR=”./Build”
