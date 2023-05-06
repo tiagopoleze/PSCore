@@ -83,7 +83,6 @@ private class MockKeyedDecoderContainer<K: CodingKey>: KeyedDecodingContainerPro
                     DecodingError
                         .Context(
                             codingPath: codingPath,
-                            // swiftlint:disable:next line_length
                             debugDescription: "Expected a type \(type) but found \(String(describing: dataProvider[key.stringValue].self)) instead"
                         )
                 )

@@ -9,7 +9,7 @@ import Foundation
 
 extension URLSessionConfiguration {
 
-    public static var swizzleMockURLProtocol: Bool = false {
+    public static var swizzleMockURLProtocol = false {
         didSet {
             guard swizzleMockURLProtocol != oldValue else { return }
             swizzle()
@@ -45,12 +45,14 @@ extension URLSessionConfiguration {
 
     @objc private class func swizzledDefaultSessionConfiguration() -> URLSessionConfiguration {
         let configuration = swizzledDefaultSessionConfiguration()
+        // swiftlint:disable:next force_unwrapping
         configuration.protocolClasses = [MockURLProtocol.self] as [AnyClass] + configuration.protocolClasses!
         return configuration
     }
 
     @objc private class func swizzledEphemeralSessionConfiguration() -> URLSessionConfiguration {
         let configuration = swizzledEphemeralSessionConfiguration()
+        // swiftlint:disable:next force_unwrapping
         configuration.protocolClasses = [MockURLProtocol.self] as [AnyClass] + configuration.protocolClasses!
         return configuration
     }

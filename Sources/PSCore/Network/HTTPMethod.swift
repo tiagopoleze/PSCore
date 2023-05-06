@@ -16,20 +16,29 @@ public enum HTTPMethod {
 
     var httpMethod: String {
         switch self {
-        case .get: return "GET"
-        case .post: return "POST"
-        case .put: return "PUT"
-        case .patch: return "PATCH"
-        case .delete: return "DELETE"
+        case .get:
+            return "GET"
+        case .post:
+            return "POST"
+        case .put:
+            return "PUT"
+        case .patch:
+            return "PATCH"
+        case .delete:
+            return "DELETE"
         }
     }
 
     var body: Data? {
         switch self {
-        case .post(let body): return body?.encode()
-        case .put(let body): return body?.encode()
-        case .patch(let body): return body?.encode()
-        case .delete, .get: return nil
+        case .post(let body):
+            return body?.encode()
+        case .put(let body):
+            return body?.encode()
+        case .patch(let body):
+            return body?.encode()
+        case .delete, .get:
+            return nil
         }
     }
 }

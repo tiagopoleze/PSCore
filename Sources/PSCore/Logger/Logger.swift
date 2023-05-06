@@ -34,17 +34,23 @@ public enum Logging {
 
         var icon: String {
             switch self {
-            case .debug: return "🚧"
-            case .info: return "ℹ️"
-            case .error: return "❌"
+            case .debug:
+                return "🚧"
+            case .info:
+                return "ℹ️"
+            case .error:
+                return "❌"
             }
         }
 
         var osLogType: OSLogType {
             switch self {
-            case .debug: return .debug
-            case .info: return .info
-            case .error: return .error
+            case .debug:
+                return .debug
+            case .info:
+                return .info
+            case .error:
+                return .error
             }
         }
     }
@@ -67,6 +73,7 @@ public func print(_ items: Any..., separator: String = " ", terminator: String =
           logLevel.rawValue >= enabledLevel.rawValue else { return }
 
     let allItems: [Any] = ["\(logLevel.icon) Description: "] + items
+    // swiftlint:disable:next trailing_closure
     let content = allItems.map({ "\n\($0)" }).joined(separator: separator) + terminator
 
     if #available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *) {
