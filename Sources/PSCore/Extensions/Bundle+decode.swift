@@ -33,12 +33,15 @@ public extension Bundle {
         do {
             return try decoder.decode(T.self, from: data)
         } catch DecodingError.keyNotFound(let key, let context) {
+            // swiftlint:disable:next line_length
             print("Failed to decode \(file) from bundle due to missing key '\(key.stringValue) - \(context.debugDescription)", logLevel: .error)
             throw DecodingError.keyNotFound(key, context)
         } catch DecodingError.typeMismatch(let key, let context) {
+            // swiftlint:disable:next line_length
             print("Failed to decode \(file) from bundle due to type mismatch - \(context.debugDescription)", logLevel: .error)
             throw DecodingError.typeMismatch(key, context)
         } catch DecodingError.valueNotFound(let type, let context) {
+            // swiftlint:disable:next line_length
             print("Failed to decode \(file) from bundle due to missing \(type) value - \(context.debugDescription)", logLevel: .error)
             throw DecodingError.valueNotFound(type, context)
         } catch DecodingError.dataCorrupted(let error) {

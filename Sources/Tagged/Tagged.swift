@@ -144,6 +144,7 @@ extension Tagged: ExpressibleByBooleanLiteral where RawValue: ExpressibleByBoole
     }
 }
 
+// swiftlint:disable:next line_length
 extension Tagged: ExpressibleByExtendedGraphemeClusterLiteral where RawValue: ExpressibleByExtendedGraphemeClusterLiteral {
     public typealias ExtendedGraphemeClusterLiteralType = RawValue.ExtendedGraphemeClusterLiteralType
 
