@@ -6,7 +6,7 @@
 //
 
 import XCTest
-@testable import PSCore
+@testable import Clean
 
 class CleanTests: XCTestCase {
     func testAllCases() async {

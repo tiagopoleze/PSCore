@@ -7,7 +7,7 @@ let package = Package(
     name: "PSCore",
     platforms: [.iOS(.v15), .macOS(.v12), .tvOS(.v13), .watchOS(.v7)],
     products: [
-        .library(name: "PSCore", targets: ["PSCore", "Tagged", "Observer", "ChainOfResponsibility"])
+        .library(name: "PSCore", targets: ["PSCore", "Tagged", "Observer", "ChainOfResponsibility", "Clean"])
     ],
     dependencies: [],
     targets: [
@@ -37,9 +37,14 @@ let package = Package(
             dependencies: [],
             plugins: ["SwiftLintPlugin"]
         ),
+        .target(
+            name: "Clean",
+            dependencies: [],
+            plugins: ["SwiftLintPlugin"]
+        ),
         .testTarget(
             name: "PSCoreTests",
-            dependencies: ["PSCore", "Tagged", "Observer", "ChainOfResponsibility"],
+            dependencies: ["PSCore", "Tagged", "Observer", "ChainOfResponsibility", "Clean"],
             resources: [.process("Resources/person.json")]
         )
     ]
