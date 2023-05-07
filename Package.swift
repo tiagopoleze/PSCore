@@ -10,33 +10,33 @@ let package = Package(
         .library(name: "PSCore", targets: ["PSCore", "Tagged", "Observer", "ChainOfResponsibility", "Clean"])
     ],
     dependencies: [
-        .package(url: "https://github.com/realm/SwiftLint", branch: "main")
+        .package(url: "https://github.com/tiagopoleze/SwiftlintPlugin", branch: "main")
     ],
     targets: [
         .target(
             name: "PSCore",
             dependencies: [],
-            plugins: [.plugin(name: "SwiftLintPlugin", package: "SwiftLint")]
+            plugins: [.plugin(name: "SwiftLintPlugin", package: "SwiftLintPlugin")]
         ),
         .target(
             name: "Tagged",
             dependencies: [],
-            plugins: [.plugin(name: "SwiftLintPlugin", package: "SwiftLint")]
+            plugins: [.plugin(name: "SwiftLintPlugin", package: "SwiftLintPlugin")]
         ),
         .target(
             name: "ChainOfResponsibility",
             dependencies: [],
-            plugins: [.plugin(name: "SwiftLintPlugin", package: "SwiftLint")]
+            plugins: [.plugin(name: "SwiftLintPlugin", package: "SwiftLintPlugin")]
         ),
         .target(
             name: "Observer",
             dependencies: [],
-            plugins: [.plugin(name: "SwiftLintPlugin", package: "SwiftLint")]
+            plugins: [.plugin(name: "SwiftLintPlugin", package: "SwiftLintPlugin")]
         ),
         .target(
             name: "Clean",
             dependencies: [],
-            plugins: [.plugin(name: "SwiftLintPlugin", package: "SwiftLint")]
+            plugins: [.plugin(name: "SwiftLintPlugin", package: "SwiftLintPlugin")]
         ),
         .testTarget(
             name: "PSCoreTests",
