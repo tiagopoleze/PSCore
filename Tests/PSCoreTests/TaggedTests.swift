@@ -6,7 +6,7 @@
 //
 
 import XCTest
-@testable import PSCore
+@testable import Tagged
 
 enum Tag {}
 struct Unit: Error {}

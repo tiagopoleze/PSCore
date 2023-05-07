@@ -15,8 +15,10 @@ public enum AuthenticationType {
 extension AuthenticationType {
     var header: HTTPHeader {
         switch self {
-        case let .header(header): return header
-        case let .bearer(token): return HTTPHeader(key: "authorization", value: "Bearer \(token)")
+        case let .header(header):
+            return header
+        case let .bearer(token):
+            return HTTPHeader(key: "authorization", value: "Bearer \(token)")
         }
     }
 }

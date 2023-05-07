@@ -54,17 +54,22 @@ public final class MockURLProtocol: URLProtocol {
         return data
     }
 
-    public static func addResponse(for filter: @escaping RequestFilter,
-                                   response: HTTPURLResponse? = nil,
-                                   data: Data? = nil,
-                                   error: Error? = nil,
-                                   delay: TimeInterval = .zero) {
-
-        mockQueryResponses.append(MockURLResponse(filter: filter,
-                                               response: response,
-                                               data: data,
-                                               error: error,
-                                               delay: delay))
+    public static func addResponse(
+        for filter: @escaping RequestFilter,
+        response: HTTPURLResponse? = nil,
+        data: Data? = nil,
+        error: Error? = nil,
+        delay: TimeInterval = .zero
+    ) {
+        mockQueryResponses.append(
+            MockURLResponse(
+                filter: filter,
+                response: response,
+                data: data,
+                error: error,
+                delay: delay
+            )
+        )
     }
 
     public static func reset() {
@@ -72,7 +77,12 @@ public final class MockURLProtocol: URLProtocol {
     }
 
     private class func response(for request: URLRequest) -> MockURLResponse? {
-        MockURLProtocol.mockQueryResponses.reversed().first(where: { $0.filter(request) })
+        return MockURLProtocol
+            .mockQueryResponses
+            .reversed()
+            .first {
+                $0.filter(request)
+            }
     }
 
     public override class func canInit(with request: URLRequest) -> Bool {

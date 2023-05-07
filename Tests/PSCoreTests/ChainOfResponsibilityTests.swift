@@ -6,7 +6,7 @@
 //
 
 import XCTest
-@testable import PSCore
+@testable import ChainOfResponsibility
 
 class ChainOfResponsibilityTests: XCTestCase {
     func testChainOfResponsibility() throws {
