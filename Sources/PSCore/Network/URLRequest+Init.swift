@@ -28,6 +28,6 @@ public extension URLRequest {
         httpMethod = method.httpMethod
         if let body = method.body { httpBody = body }
         headers.forEach { addValue($0.value, forHTTPHeaderField: $0.key) }
-        if let header = authenticationType?.header { addValue(header.value, forHTTPHeaderField: header.key)}
+        if let header = authenticationType?.header { addValue(header.value, forHTTPHeaderField: header.key) }
     }
 }

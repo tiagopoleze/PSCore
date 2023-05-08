@@ -35,7 +35,7 @@ class CleanTests: XCTestCase {
                 XCTAssertTrue(listMemoryRepository.lists.count == 1)
 
                 let deleteDTOInput = DeleteListMemoryDTOInput(id: updateUseCaseDTOOutput.updatedList.id)
-                let deleteUseCase = DeleteListMemory(useCase: listMemoryRepository, validations: [])
+                let deleteUseCase = DeleteListMemory(useCase: listMemoryRepository, validations: [IsEmptyValidation(input: list.title)])
                 let deleteDTOOutput = try await deleteUseCase.execute(input: deleteDTOInput)
                 XCTAssertEqual(deleteDTOOutput.deletedList?.title, list.title)
                 XCTAssertFalse(listMemoryRepository.lists.count == 1)
