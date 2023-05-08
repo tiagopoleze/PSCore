@@ -10,7 +10,7 @@ let package = Package(
         .library(name: "PSCore", targets: ["PSCore", "Tagged", "Observer", "ChainOfResponsibility", "Clean"])
     ],
     dependencies: [
-        .package(url: "https://github.com/tiagopoleze/SwiftlintPlugin", branch: "main")
+        .package(url: "https://tiagopoleze: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@github.com/tiagopoleze/SwiftlintPlugin", branch: "main")
     ],
     targets: [
         .target(
