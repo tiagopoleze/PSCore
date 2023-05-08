@@ -9,38 +9,34 @@ let package = Package(
     products: [
         .library(name: "PSCore", targets: ["PSCore", "Tagged", "Observer", "ChainOfResponsibility", "Clean"])
     ],
-    dependencies: [],
+    dependencies: [
+        .package(url: "https://github.com/tiagopoleze/SwiftlintPlugin", branch: "main")
+    ],
     targets: [
-        .binaryTarget(name: "SwiftLintBinary", path: "./Libs/SwiftLintBinary.artifactbundle"),
-        .plugin(
-            name: "SwiftLintPlugin",
-            capability: .buildTool(),
-            dependencies: ["SwiftLintBinary"]
-        ),
         .target(
             name: "PSCore",
             dependencies: [],
-            plugins: ["SwiftLintPlugin"]
+            plugins: [.plugin(name: "SwiftLintPlugin", package: "SwiftLintPlugin")]
         ),
         .target(
             name: "Tagged",
             dependencies: [],
-            plugins: ["SwiftLintPlugin"]
+            plugins: [.plugin(name: "SwiftLintPlugin", package: "SwiftLintPlugin")]
         ),
         .target(
             name: "ChainOfResponsibility",
             dependencies: [],
-            plugins: ["SwiftLintPlugin"]
+            plugins: [.plugin(name: "SwiftLintPlugin", package: "SwiftLintPlugin")]
         ),
         .target(
             name: "Observer",
             dependencies: [],
-            plugins: ["SwiftLintPlugin"]
+            plugins: [.plugin(name: "SwiftLintPlugin", package: "SwiftLintPlugin")]
         ),
         .target(
             name: "Clean",
             dependencies: [],
-            plugins: ["SwiftLintPlugin"]
+            plugins: [.plugin(name: "SwiftLintPlugin", package: "SwiftLintPlugin")]
         ),
         .testTarget(
             name: "PSCoreTests",
