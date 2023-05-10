@@ -5,7 +5,7 @@
 //  Created by Tiago Ferreira on 26/04/2023.
 //
 
-import os.log
+import OSLog
 
 /**
  Logging utility
@@ -55,7 +55,6 @@ public enum Logging {
         }
     }
 
-    @available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
     static var osLogger = Logger(subsystem: "logging.PSCore", category: "main")
 
     /// Array of enabled log levels. Default value is: [].
@@ -68,17 +67,16 @@ public enum Logging {
     }()
 }
 
-public func print(_ items: Any..., separator: String = " ", terminator: String = "\n", logLevel: Logging.Level) {
+public func print(
+    _ items: Any...,
+    separator: String = " ",
+    terminator: String = "\n",
+    logLevel: Logging.Level
+) {
     guard let enabledLevel = Logging.level,
           logLevel.rawValue >= enabledLevel.rawValue else { return }
 
     let allItems: [Any] = ["\(logLevel.icon) Description: "] + items
-    // swiftlint:disable:next trailing_closure
     let content = allItems.map({ "\n\($0)" }).joined(separator: separator) + terminator
-
-    if #available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *) {
-        Logging.osLogger.log(level: logLevel.osLogType, "\(content)")
-    } else {
-        os_log("%@", type: logLevel.osLogType, content)
-    }
+    Logging.osLogger.log(level: logLevel.osLogType, "\(content)")
 }
