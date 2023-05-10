@@ -1,0 +1,24 @@
+{
+  "configurations" : [
+    {
+      "id" : "E5CA4AC8-6AE1-4C81-9E75-989F9355CDF2",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "testTimeoutsEnabled" : true
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "PSCoreTests",
+        "name" : "PSCoreTests"
+      }
+    }
+  ],
+  "version" : 1
+}
