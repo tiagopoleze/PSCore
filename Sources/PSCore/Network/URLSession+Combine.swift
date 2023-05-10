@@ -22,9 +22,7 @@ extension URLSession {
         decoder: JSONDecoder = .init(),
         scheduler: S = DispatchQueue.main
     ) -> AnyPublisher<T, Error> {
-        URLSession
-            .shared
-            .dataTaskPublisher(for: request)
+        dataTaskPublisher(for: request)
             .retry(1)
             .tryMap {
                 guard let httpResponse = $0.response as? HTTPURLResponse,
