@@ -12,17 +12,21 @@ class CleanTests: XCTestCase {
     func testAllCases() async {
         let createListDTOInput = CreateListDTOInput(title: "Tiago")
         let listMemoryRepository = ListMemoryRepository()
-        let createListMemory = CreateListMemory(
-            useCase: listMemoryRepository,
-            validations: [IsEmptyValidation(input: createListDTOInput.title)]
-        )
             do {
+                // MARK: - CreateUseCase
+                let createListMemory = CreateListMemory(
+                    useCase: listMemoryRepository,
+                    validations: [IsEmptyValidation(input: createListDTOInput.title)]
+                )
                 let createListDTOOutput = try await createListMemory.execute(input: createListDTOInput)
                 XCTAssertEqual(createListDTOOutput.list.title, createListDTOInput.title)
+                // MARK: - QueryUseCase
                 let queryListDTOInput = QueryListDTOInput(id: createListDTOOutput.list.id)
                 let queryListMemory = QueryListMemory(useCase: listMemoryRepository, validations: [])
                 let queryListDTOOutput = try await queryListMemory.execute(input: queryListDTOInput)
                 XCTAssertEqual(queryListDTOOutput.list?.id, createListDTOInput.id)
+
+                // MARK: - UpdateUseCase
                 guard let list = queryListDTOOutput.list else { return }
                 list.title = "Tiago Ferreira"
                 let updateListDTOInput = UpdateListMemoryDTOInput(id: list.id, newList: list)
@@ -34,6 +38,14 @@ class CleanTests: XCTestCase {
                 XCTAssertEqual(updateUseCaseDTOOutput.updatedList.title, list.title)
                 XCTAssertTrue(listMemoryRepository.lists.count == 1)
 
+                // MARK: - ReadUseCase
+                let readDTOInput = ReadListMemoryDTOInput(id: updateUseCaseDTOOutput.updatedList.id, title: updateUseCaseDTOOutput.updatedList.title)
+                let readUseCase = ReadMemoryUseCase(useCase: listMemoryRepository, validations: [])
+                let readDTOOutput = try await readUseCase.execute(input: readDTOInput)
+                XCTAssertEqual(readDTOOutput.list.id, updateUseCaseDTOOutput.updatedList.id)
+                XCTAssertEqual(readDTOOutput.list.title, updateUseCaseDTOOutput.updatedList.title)
+
+                // MARK: - DeleteUseCase
                 let deleteDTOInput = DeleteListMemoryDTOInput(id: updateUseCaseDTOOutput.updatedList.id)
                 let deleteUseCase = DeleteListMemory(useCase: listMemoryRepository, validations: [IsEmptyValidation(input: list.title)])
                 let deleteDTOOutput = try await deleteUseCase.execute(input: deleteDTOInput)
@@ -99,6 +111,38 @@ extension ListMemoryRepository: Delete {
         throw UseCaseError.isNil("No list item")
     }
 }
+
+extension ListMemoryRepository: Read {
+    func read(input: ReadListMemoryDTOInput) async throws -> ReadListMemoryDTOOutput {
+        if let _ = lists.first(where: { $0.id == input.id }) {
+            return ReadListMemoryDTOOutput(input: input)
+        }
+
+        throw NSError(domain: "Could not found List", code: 404)
+    }
+}
+
+struct ReadListMemoryDTOInput: DTOInput {
+    let id: UUID
+    var description: String { "ReadListMemoryDTOInput" }
+
+    let title: String
+
+    init(id: UUID, title: String) {
+        self.id = id
+        self.title = title
+    }
+}
+
+struct ReadListMemoryDTOOutput: DTOOutput {
+    let list: List
+
+    init(input: ReadListMemoryDTOInput) {
+        list = List(id: input.id, title: input.title)
+    }
+}
+
+class ReadMemoryUseCase: ReadUseCase<ReadListMemoryDTOInput, ReadListMemoryDTOOutput, ListMemoryRepository> { }
 
 struct CreateListDTOInput: DTOInput {
     var id = UUID()
@@ -208,5 +252,9 @@ class List: Hashable {
 
     static func == (lhs: List, rhs: List) -> Bool {
         lhs.id == rhs.id && lhs.title == rhs.title && lhs.archived == rhs.archived && lhs.todos == rhs.todos
+    }
+
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(self)
     }
 }
