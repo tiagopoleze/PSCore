@@ -7,7 +7,7 @@ let package = Package(
     name: "PSCore",
     platforms: [.iOS(.v16), .macOS(.v13), .tvOS(.v16), .watchOS(.v9)],
     products: [
-        .library(name: "PSCore", targets: ["PSCore", "Tagged", "Observer", "ChainOfResponsibility", "Clean", "StorageProvider"])
+        .library(name: "PSCore", targets: ["PSCore", "Tagged", "Observer", "ChainOfResponsibility", "Clean"])
     ],
     dependencies: [
         .package(url: "https://tiagopoleze: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@github.com/tiagopoleze/SwiftlintPlugin", branch: "main")
