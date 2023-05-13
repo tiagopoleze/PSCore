@@ -7,7 +7,7 @@ let package = Package(
     name: "PSCore",
     platforms: [.iOS(.v16), .macOS(.v13), .tvOS(.v16), .watchOS(.v9)],
     products: [
-        .library(name: "PSCore", targets: ["PSCore", "Tagged", "Observer", "ChainOfResponsibility", "Clean", "StorageProvider"])
+        .library(name: "PSCore", targets: ["PSCore", "Tagged", "Observer", "ChainOfResponsibility", "Clean"])
     ],
     dependencies: [
         .package(url: "https://tiagopoleze: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@github.com/tiagopoleze/SwiftlintPlugin", branch: "main")
@@ -15,7 +15,6 @@ let package = Package(
     targets: [
         .target(name: "PSCore", plugins: [.plugin(name: "SwiftLintPlugin", package: "SwiftLintPlugin")]),
         .target(name: "Tagged", plugins: [.plugin(name: "SwiftLintPlugin", package: "SwiftLintPlugin")]),
-        .target(name: "StorageProvider", plugins: [.plugin(name: "SwiftLintPlugin", package: "SwiftLintPlugin")]),
         .target(name: "ChainOfResponsibility", plugins: [.plugin(name: "SwiftLintPlugin", package: "SwiftLintPlugin")]),
         .target(name: "Observer", plugins: [.plugin(name: "SwiftLintPlugin", package: "SwiftLintPlugin")]),
         .target(name: "Clean", plugins: [.plugin(name: "SwiftLintPlugin", package: "SwiftLintPlugin")]),
