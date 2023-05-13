@@ -1,0 +1,52 @@
+{
+  "configurations" : [
+    {
+      "id" : "E5CA4AC8-6AE1-4C81-9E75-989F9355CDF2",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "testTimeoutsEnabled" : true
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "PSCoreTests",
+        "name" : "PSCoreTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "ObserverTests",
+        "name" : "ObserverTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "ChainOfResponsibilityTests",
+        "name" : "ChainOfResponsibilityTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "CleanTests",
+        "name" : "CleanTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "TaggedTests",
+        "name" : "TaggedTests"
+      }
+    }
+  ],
+  "version" : 1
+}
