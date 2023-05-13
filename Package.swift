@@ -15,7 +15,6 @@ let package = Package(
     targets: [
         .target(name: "PSCore", plugins: [.plugin(name: "SwiftLintPlugin", package: "SwiftLintPlugin")]),
         .target(name: "Tagged", plugins: [.plugin(name: "SwiftLintPlugin", package: "SwiftLintPlugin")]),
-        .target(name: "StorageProvider", plugins: [.plugin(name: "SwiftLintPlugin", package: "SwiftLintPlugin")]),
         .target(name: "ChainOfResponsibility", plugins: [.plugin(name: "SwiftLintPlugin", package: "SwiftLintPlugin")]),
         .target(name: "Observer", plugins: [.plugin(name: "SwiftLintPlugin", package: "SwiftLintPlugin")]),
         .target(name: "Clean", plugins: [.plugin(name: "SwiftLintPlugin", package: "SwiftLintPlugin")]),
