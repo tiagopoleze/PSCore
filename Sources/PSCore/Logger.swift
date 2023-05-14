@@ -1,32 +1,8 @@
-//
-//  Logger.swift
-//  
-//
-//  Created by Tiago Ferreira on 26/04/2023.
-//
-
 import OSLog
 
-/**
- Logging utility
-
- - Warning: When building a release it is recommended to disable all levels (default value).
-
- To enable debugging level:
- ```swift
- Logging.level = .debug
- ```
-
- To disable all logging:
- ```swift
- Logging.level = nil
- ```
-
- Logging is performed using `OSLog` with subsystem "logging.PSCore" and category "main".
- */
+@available(iOS 14.0, macOS 11.0, *)
 public enum Logging {
 
-    /// Log message level.
     public enum Level: Int, CaseIterable {
         case debug
         case info
@@ -34,30 +10,23 @@ public enum Logging {
 
         var icon: String {
             switch self {
-            case .debug:
-                return "🚧"
-            case .info:
-                return "ℹ️"
-            case .error:
-                return "❌"
+            case .debug: return "🚧"
+            case .info: return "ℹ️"
+            case .error: return "❌"
             }
         }
 
         var osLogType: OSLogType {
             switch self {
-            case .debug:
-                return .debug
-            case .info:
-                return .info
-            case .error:
-                return .error
+            case .debug: return .debug
+            case .info: return .info
+            case .error: return .error
             }
         }
     }
 
     static var osLogger = Logger(subsystem: "logging.PSCore", category: "main")
 
-    /// Array of enabled log levels. Default value is: [].
     public static var level: Level? = {
 #if DEBUG
         return .debug
@@ -67,6 +36,7 @@ public enum Logging {
     }()
 }
 
+@available(iOS 14.0, macOS 11.0, *)
 public func print(
     _ items: Any...,
     separator: String = " ",

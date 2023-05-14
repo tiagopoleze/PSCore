@@ -1,20 +1,7 @@
-//
-//  URLSession+Async.swift
-//  
-//
-//  Created by Tiago Ferreira on 27/04/2023.
-//
-
 import Foundation
 
 extension URLSession {
-    /// An easier way to create an async Task
-    /// - Parameters:
-    ///   - request: The request of the task
-    ///   - type: The return type
-    ///   - decoder: The decoder used to decode the data
-    ///   - delegate: `URLSessionTaskDelegate`
-    /// - Returns: The return value of the task
+    @available(iOS 15.0, macOS 12.0, *)
     public func createTask<T: Decodable>(
         _ request: URLRequest,
         type: T.Type,

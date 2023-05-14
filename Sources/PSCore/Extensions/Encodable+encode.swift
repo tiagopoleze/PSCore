@@ -1,10 +1,3 @@
-//
-//  Encodable+encode.swift
-//  
-//
-//  Created by Tiago Ferreira on 28/04/2023.
-//
-
 import Foundation
 
 public extension Encodable {

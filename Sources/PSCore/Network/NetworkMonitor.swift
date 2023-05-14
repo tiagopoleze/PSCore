@@ -1,13 +1,7 @@
-//
-//  NetworkMonitor.swift
-//  
-//
-//  Created by Tiago Ferreira on 27/04/2023.
-//
-
 import Foundation
 import Network
 
+@available(iOS 13.0, macOS 10.15, *)
 public class NetworkMonitor: ObservableObject {
     private let monitor = NWPathMonitor()
     private let queue = DispatchQueue(label: "Monitor")

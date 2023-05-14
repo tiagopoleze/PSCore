@@ -1,10 +1,3 @@
-//
-//  RequestFilter.swift
-//  
-//
-//  Created by Tiago Ferreira on 27/04/2023.
-//
-
 import Foundation
 
 public typealias RequestFilter = (URLRequest) -> (Bool)
