@@ -1,6 +1,7 @@
 import Foundation
 
 extension URLSession {
+    @available(iOS 15.0, macOS 12.0, *)
     public func createTask<T: Decodable>(
         _ request: URLRequest,
         type: T.Type,

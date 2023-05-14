@@ -5,17 +5,13 @@ import PackageDescription
 
 let package = Package(
     name: "PSCore",
-    platforms: [.iOS(.v16), .macOS(.v13), .tvOS(.v16), .watchOS(.v9)],
     products: [
         .library(name: "PSCore", targets: ["PSCore", "Observer", "ChainOfResponsibility"])
     ],
-    dependencies: [
-        .package(url: "https://github.com/realm/SwiftLint", branch: "main")
-    ],
     targets: [
-        .target(name: "PSCore", plugins: [.plugin(name: "SwiftLintPlugin", package: "SwiftLint")]),
-        .target(name: "ChainOfResponsibility", plugins: [.plugin(name: "SwiftLintPlugin", package: "SwiftLint")]),
-        .target(name: "Observer", plugins: [.plugin(name: "SwiftLintPlugin", package: "SwiftLint")]),
+        .target(name: "PSCore"),
+        .target(name: "ChainOfResponsibility"),
+        .target(name: "Observer"),
         .testTarget(
             name: "PSCoreTests",
             dependencies: ["PSCore"],

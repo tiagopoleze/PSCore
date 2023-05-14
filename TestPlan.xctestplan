@@ -1,7 +1,7 @@
 {
   "configurations" : [
     {
-      "id" : "E5CA4AC8-6AE1-4C81-9E75-989F9355CDF2",
+      "id" : "DA733C7F-3E55-4041-B5F5-0F265B6A4CDD",
       "name" : "Configuration 1",
       "options" : {
 
@@ -15,8 +15,8 @@
     {
       "target" : {
         "containerPath" : "container:",
-        "identifier" : "PSCoreTests",
-        "name" : "PSCoreTests"
+        "identifier" : "ChainOfResponsibilityTests",
+        "name" : "ChainOfResponsibilityTests"
       }
     },
     {
@@ -29,8 +29,8 @@
     {
       "target" : {
         "containerPath" : "container:",
-        "identifier" : "ChainOfResponsibilityTests",
-        "name" : "ChainOfResponsibilityTests"
+        "identifier" : "PSCoreTests",
+        "name" : "PSCoreTests"
       }
     }
   ],

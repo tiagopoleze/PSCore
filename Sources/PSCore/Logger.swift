@@ -1,5 +1,6 @@
 import OSLog
 
+@available(iOS 14.0, macOS 11.0, *)
 public enum Logging {
 
     public enum Level: Int, CaseIterable {
@@ -35,6 +36,7 @@ public enum Logging {
     }()
 }
 
+@available(iOS 14.0, macOS 11.0, *)
 public func print(
     _ items: Any...,
     separator: String = " ",

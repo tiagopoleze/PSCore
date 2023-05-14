@@ -1,6 +1,8 @@
+#if canImport(Combine)
 import Combine
 import Foundation
 
+@available(iOS 13.0, macOS 10.15, *)
 extension URLSession {
     public func createPublisher<T: Decodable, S: Scheduler>(
         _ request: URLRequest,
@@ -22,3 +24,4 @@ extension URLSession {
             .eraseToAnyPublisher()
     }
 }
+#endif
