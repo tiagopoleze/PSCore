@@ -1,10 +1,3 @@
-//
-//  MockDecoder.swift
-//
-//
-//  Created by Tiago Ferreira on 26/04/2023.
-//
-
 public class MockDecoder {
 
     public init() {}

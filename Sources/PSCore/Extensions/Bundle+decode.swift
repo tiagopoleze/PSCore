@@ -1,18 +1,6 @@
-//
-//  Bundle+decode.swift
-//  
-//
-//  Created by Tiago Ferreira on 26/04/2023.
-//
-
 import Foundation
 
 public extension Bundle {
-    /// A function the decode any Decodable file
-    /// - Parameters:
-    ///   - type: The return type
-    ///   - file: The file name
-    /// - Returns: The object that will be returned
     func decode<T: Decodable>(
         _ type: T.Type,
         from file: String,

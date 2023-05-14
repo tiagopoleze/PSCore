@@ -1,10 +1,3 @@
-//
-//  CloudDefaults.swift
-//  
-//
-//  Created by Tiago Ferreira on 13/05/2023.
-//
-
 import Foundation
 
 public final class CloudDefaults {

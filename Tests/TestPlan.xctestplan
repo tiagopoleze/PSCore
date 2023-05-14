@@ -32,20 +32,6 @@
         "identifier" : "ChainOfResponsibilityTests",
         "name" : "ChainOfResponsibilityTests"
       }
-    },
-    {
-      "target" : {
-        "containerPath" : "container:",
-        "identifier" : "CleanTests",
-        "name" : "CleanTests"
-      }
-    },
-    {
-      "target" : {
-        "containerPath" : "container:",
-        "identifier" : "TaggedTests",
-        "name" : "TaggedTests"
-      }
     }
   ],
   "version" : 1
