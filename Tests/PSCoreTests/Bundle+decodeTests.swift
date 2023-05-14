@@ -9,7 +9,7 @@ import XCTest
 @testable import PSCore
 
 final class BundleDecodeTests: XCTestCase {
-    @available(iOS 14.0, *)
+    @available(iOS 14.0, macOS 11.0, *)
     func testBundle() {
         Logging.level = .debug
         XCTAssertThrowsError(try Bundle.module.decode(String.self, from: "here.json"))

@@ -9,7 +9,7 @@ import XCTest
 @testable import PSCore
 
 class MockURLRequestTest: XCTestCase {
-    @available(iOS 15.0, *)
+    @available(iOS 15.0, macOS 12.0, *)
     func testMock() async {
         URLSessionConfiguration.swizzleMockURLProtocol = true
         let session = URLSession(configuration: URLSessionConfiguration.default)
