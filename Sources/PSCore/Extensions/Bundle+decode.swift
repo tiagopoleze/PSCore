@@ -1,4 +1,5 @@
 import Foundation
+import OSLog
 
 public extension Bundle {
     // swiftlint:disable:next cyclomatic_complexity
@@ -24,29 +25,29 @@ public extension Bundle {
         } catch DecodingError.keyNotFound(let key, let context) {
             if #available(iOS 14.0, macOS 11.0, *) {
                 // swiftlint:disable:next line_length
-                print("Failed to decode \(file) from bundle due to missing key '\(key.stringValue) - \(context.debugDescription)", logLevel: .error)
+                Logger.bundleDecoder.error("Failed to decode \(file) from bundle due to missing key '\(key.stringValue) - \(context.debugDescription)")
             }
             throw DecodingError.keyNotFound(key, context)
         } catch DecodingError.typeMismatch(let key, let context) {
             if #available(iOS 14.0, macOS 11.0, *) {
                 // swiftlint:disable:next line_length
-                print("Failed to decode \(file) from bundle due to type mismatch - \(context.debugDescription)", logLevel: .error)
+                Logger.bundleDecoder.error("Failed to decode \(file) from bundle due to type mismatch - \(context.debugDescription)")
             }
             throw DecodingError.typeMismatch(key, context)
         } catch DecodingError.valueNotFound(let type, let context) {
             if #available(iOS 14.0, macOS 11.0, *) {
                 // swiftlint:disable:next line_length
-                print("Failed to decode \(file) from bundle due to missing \(type) value - \(context.debugDescription)", logLevel: .error)
+                Logger.bundleDecoder.error("Failed to decode \(file) from bundle due to missing \(type) value - \(context.debugDescription)")
             }
             throw DecodingError.valueNotFound(type, context)
         } catch DecodingError.dataCorrupted(let error) {
             if #available(iOS 14.0, macOS 11.0, *) {
-                print("Failed to decode \(file) from bundle because it appears to be invalid JSON.", logLevel: .error)
+                Logger.bundleDecoder.error("Failed to decode \(file) from bundle because it appears to be invalid JSON.")
             }
             throw DecodingError.dataCorrupted(error)
         } catch {
             if #available(iOS 14.0, macOS 11.0, *) {
-                print("Failed to decode \(file) from bundle: \(error.localizedDescription)", logLevel: .error)
+                Logger.bundleDecoder.error("Failed to decode \(file) from bundle: \(error.localizedDescription)")
             }
             throw error
         }
