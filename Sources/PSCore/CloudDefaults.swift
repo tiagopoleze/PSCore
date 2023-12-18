@@ -1,6 +1,9 @@
 import Foundation
 
+/// A class that represents the default settings for cloud operations.
 public final class CloudDefaults {
+    
+    /// A singleton instance of `CloudDefaults` that can be accessed globally.
     public static var shared = CloudDefaults()
     private var ignoreLocalChanges = false
 
@@ -10,6 +13,7 @@ public final class CloudDefaults {
         NotificationCenter.default.removeObserver(self)
     }
 
+    /// Starts the cloud defaults sync.
     public func start() {
         NotificationCenter
             .default

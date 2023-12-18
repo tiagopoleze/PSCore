@@ -1,8 +1,16 @@
 import Foundation
 import OSLog
 
+/// Extension for decoding JSON data from a file in the bundle.
 public extension Bundle {
-    // swiftlint:disable:next cyclomatic_complexity
+    /// Decodes the specified type from a JSON file in the bundle.
+    /// - Parameters:
+    ///   - type: The type to decode.
+    ///   - file: The name of the JSON file.
+    ///   - dateDecodingStrategy: The date decoding strategy to use. Default is `.deferredToDate`.
+    ///   - keyDecodingStrategy: The key decoding strategy to use. Default is `.useDefaultKeys`.
+    /// - Returns: The decoded value of the specified type.
+    /// - Throws: An error if the decoding process fails.
     func decode<T: Decodable>(
         _ type: T.Type,
         from file: String,
@@ -15,45 +23,40 @@ public extension Bundle {
         guard let data = try? Data(contentsOf: url) else {
             throw BundleDecodeError.noContentTo(url)
         }
-
+        
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = dateDecodingStrategy
         decoder.keyDecodingStrategy = keyDecodingStrategy
-
+        
         do {
             return try decoder.decode(T.self, from: data)
-        } catch DecodingError.keyNotFound(let key, let context) {
-            if #available(iOS 14.0, macOS 11.0, *) {
+        } catch {
+            logDecodeError(error, file: file)
+            throw error
+        }
+    }
+    
+    private func logDecodeError(_ error: Error, file: String) {
+        if #available(iOS 14.0, macOS 11.0, *) {
+            switch error {
+            case DecodingError.keyNotFound(let key, let context):
                 // swiftlint:disable:next line_length
                 Logger.bundleDecoder.error("Failed to decode \(file) from bundle due to missing key '\(key.stringValue) - \(context.debugDescription)")
-            }
-            throw DecodingError.keyNotFound(key, context)
-        } catch DecodingError.typeMismatch(let key, let context) {
-            if #available(iOS 14.0, macOS 11.0, *) {
-                // swiftlint:disable:next line_length
+            case DecodingError.typeMismatch(_, let context):
                 Logger.bundleDecoder.error("Failed to decode \(file) from bundle due to type mismatch - \(context.debugDescription)")
-            }
-            throw DecodingError.typeMismatch(key, context)
-        } catch DecodingError.valueNotFound(let type, let context) {
-            if #available(iOS 14.0, macOS 11.0, *) {
+            case DecodingError.valueNotFound(let type, let context):
                 // swiftlint:disable:next line_length
                 Logger.bundleDecoder.error("Failed to decode \(file) from bundle due to missing \(type) value - \(context.debugDescription)")
-            }
-            throw DecodingError.valueNotFound(type, context)
-        } catch DecodingError.dataCorrupted(let error) {
-            if #available(iOS 14.0, macOS 11.0, *) {
+            case DecodingError.dataCorrupted(_):
                 Logger.bundleDecoder.error("Failed to decode \(file) from bundle because it appears to be invalid JSON.")
-            }
-            throw DecodingError.dataCorrupted(error)
-        } catch {
-            if #available(iOS 14.0, macOS 11.0, *) {
+            default:
                 Logger.bundleDecoder.error("Failed to decode \(file) from bundle: \(error.localizedDescription)")
             }
-            throw error
         }
     }
 }
 
+/// An enumeration representing errors that can occur during decoding operations in a Bundle.
 public enum BundleDecodeError: Error {
     case noValidURL(String)
     case noContentTo(URL)

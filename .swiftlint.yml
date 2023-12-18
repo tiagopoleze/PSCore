@@ -1,48 +1,30 @@
-disabled_rules:
-  - colon
-  - comma
-  - control_statement
-opt_in_rules:
+disabled_rules: # Regras que você não quer aplicar
+  - trailing_whitespace
+  - todo
+  - force_cast
+  - force_try
+  - force_unwrapping
+  - function_body_length
+  - type_body_length
+  - file_length
+  - identifier_name
+  - nesting
+  - type_name
+
+opt_in_rules: # Regras que não estão ativadas por padrão
   - empty_count
+  - missing_docs
+  - closure_end_indentation
+  - closure_spacing
+  - operator_usage_whitespace
+  - overridden_super_call
+  - prohibited_super_call
+  - redundant_nil_coalescing
+  - switch_case_on_newline
 
-# Alternatively, specify all rules explicitly by uncommenting this option:
-# only_rules: # delete `disabled_rules` & `opt_in_rules` if using this
-#   - empty_parameters
-#   - vertical_whitespace
-
-analyzer_rules:
-  - explicit_self
-
-included:
-  - Sources/
-  - Tests/
+# Algumas regras de configuração
+line_length: 140
+cyclomatic_complexity:
+  ignores_case_statements: true
 excluded:
   - .build/
-
-allow_zero_lintable_files: false
-
-force_cast: warning
-force_try:
-  severity: warning
-line_length: 120
-type_body_length:
-  - 300
-  - 400
-file_length:
-  warning: 500
-  error: 1200
-type_name:
-  min_length: 3
-  max_length:
-    warning: 40
-    error: 50
-  excluded: iPhone
-  allowed_symbols: ["_"]
-identifier_name:
-  min_length:
-    error: 3
-  excluded:
-    - id
-    - URL
-    - GlobalAPIKey
-reporter: "xcode"

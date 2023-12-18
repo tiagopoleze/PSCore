@@ -1,7 +1,16 @@
+/// A mock decoder that decodes data from a data provider.
 public class MockDecoder {
 
+    /// Initializes a new instance of the `MockDecoder` class.
     public init() {}
 
+    /// Decodes the specified type from the given data provider.
+    ///
+    /// - Parameters:
+    ///   - type: The type to decode.
+    ///   - dataProvider: The data provider containing the data to decode.
+    /// - Returns: An instance of the decoded type.
+    /// - Throws: A `DecodingError` if the decoding process fails.
     public func decode<T: Decodable>(
         _ type: T.Type,
         from dataProvider: [String: Any]
