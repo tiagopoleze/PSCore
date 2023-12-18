@@ -1,9 +1,5 @@
 name: Run Makefile into PSCore
 
-env:
-  SWIFT_VERSION: 5.9
-  PROJECT_NAME: PSCore
-
 on:
   push:
     branches: [ main ]
@@ -20,7 +16,7 @@ jobs:
     - name: Set up Swift
       uses: fwal/setup-swift@v1
       with:
-        swift-version: '$SWIFT_VERSION'
+        swift-version: '5.9'
 
     - name: Install dependencies
       run: |
