@@ -1,51 +1,51 @@
 /// A protocol that defines an action performed by an observer.
-public protocol ObserverAction {
-    /// The type of the value associated with the action.
-    associatedtype Value
-    /// The value associated with the action.
-    var value: Value { get }
+public protocol ObserverEvent {
+    /// The type of the data associated with the event.
+    associatedtype EventData
+    /// The data associated with the event.
+    var eventData: EventData { get }
 }
 
 /// A protocol that defines an observer.
 public protocol Observer {
-    /// The type of the action associated with the observer.
-    associatedtype Action: ObserverAction
+    /// The type of the event associated with the observer.
+    associatedtype Event: ObserverEvent
     
-    /// Notifies the observer with the specified action.
-    /// - Parameter action: The action to notify the observer with.
-    func notify(action: Action)
+    /// Sends the specified event to the observer.
+    /// - Parameter event: The event to send to the observer.
+    func send(event: Event)
 }
 
 /// A protocol that defines an observable object.
 public protocol Observable: AnyObject {
-    associatedtype InsideObserver: Observer
+    associatedtype RegisteredObserver: Observer
     
-    /// The array of observers subscribed to the observable object.
-    var observers: [InsideObserver] { get set }
+    /// The array of observers registered to the observable object.
+    var registeredObservers: [RegisteredObserver] { get set }
     
-    /// Subscribes an observer to the observable object.
-    /// - Parameter observer: The observer to subscribe.
-    func subscribe(observer: InsideObserver)
+    /// Registers an observer to the observable object.
+    /// - Parameter observer: The observer to register.
+    func register(observer: RegisteredObserver)
     
-    /// Notifies all observers with the specified action.
-    /// - Parameter action: The action to notify the observers with.
-    func notifyAll(action: InsideObserver.Action)
+    /// Sends the specified event to all registered observers.
+    /// - Parameter event: The event to send to the observers.
+    func sendToAll(event: RegisteredObserver.Event)
 }
 
 /// Extends the `Observable` protocol with additional functionality.
 public extension Observable {
     
-    /// Subscribes an observer to the observable.
-    /// - Parameter observer: The observer to be subscribed.
-    func subscribe(observer: InsideObserver) {
-        observers.append(observer)
+    /// Registers an observer to the observable.
+    /// - Parameter observer: The observer to be registered.
+    func register(observer: RegisteredObserver) {
+        registeredObservers.append(observer)
     }
 
-    /// Notifies all subscribed observers with the specified action.
-    /// - Parameter action: The action to be notified.
-    func notifyAll(action: InsideObserver.Action) {
-        for observer in observers {
-            observer.notify(action: action)
+    /// Sends the specified event to all registered observers.
+    /// - Parameter event: The event to be sent.
+    func sendToAll(event: RegisteredObserver.Event) {
+        for observer in registeredObservers {
+            observer.send(event: event)
         }
     }
 }

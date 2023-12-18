@@ -13,24 +13,24 @@ class ObserverTests: XCTestCase {
         let observer = TestObserver()
         let observable = TestObservable()
         XCTAssertFalse(observer.value)
-        observable.subscribe(observer: observer)
-        observable.notifyAll(action: TestAction(value: true))
+        observable.register(observer: observer)
+        observable.sendToAll(event: TestAction(eventData: true))
         XCTAssertTrue(observer.value)
     }
 }
 
-struct TestAction: ObserverAction {
-    var value: Bool
+struct TestAction: ObserverEvent {
+    var eventData: Bool
 }
 
 class TestObserver: Observer {
     var value: Bool = false
 
-    func notify(action: TestAction) {
-        self.value = action.value
+    func send(event: TestAction) {
+        self.value = event.eventData
     }
 }
 
 class TestObservable: Observable {
-    var observers: [TestObserver] = []
+    var registeredObservers: [TestObserver] = []
 }

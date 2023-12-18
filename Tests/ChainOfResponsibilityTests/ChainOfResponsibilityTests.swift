@@ -11,14 +11,14 @@ import XCTest
 class ChainOfResponsibilityTests: XCTestCase {
     func testChainOfResponsibility() throws {
         let first = ChainOfResponsibility<Int, Int> { number in
-            number == 10
-        } result: { number in
+            number >= 10
+        } process: { number in
             number + 1
         }
 
-        let second = ChainOfResponsibility<Int, Int>(next: first) { number in
-            number == 5
-        } result: { number in
+        let second = ChainOfResponsibility<Int, Int>(nextHandler: first) { number in
+            number < 10
+        } process: { number in
             number + 2
         }
 
@@ -26,14 +26,15 @@ class ChainOfResponsibilityTests: XCTestCase {
         let result2 = try second.execute(input: 5)
         XCTAssertEqual(result, 11)
         XCTAssertEqual(result2, 7)
+        XCTAssertEqual(try second.execute(input: 99), 100)
 
         XCTAssertThrowsError(try first.execute(input: 7)) { error in
-            XCTAssertEqual(error as? ChainOfResponsibilityError, ChainOfResponsibilityError.noNextCase)
+            XCTAssertEqual(error as? ChainOfResponsibilityError, ChainOfResponsibilityError.noEqualChainOfResponsibility)
         }
 
-        let third = ChainOfResponsibility<Int, Bool>(next: second) {
+        let third = ChainOfResponsibility<Int, Bool>(nextHandler: second) {
             $0 == 7
-        } result: {
+        } process: {
             $0 == 7
         }
         XCTAssertThrowsError(try third.execute(input: 5)) { error in

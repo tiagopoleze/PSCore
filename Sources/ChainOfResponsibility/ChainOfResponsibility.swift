@@ -6,14 +6,14 @@ public protocol ChainingOfResponsibility {
     associatedtype Output
     
     /// The condition that determines if the chain should handle the input.
-    var condition: (Input) -> Bool { get }
+    var shouldProcess: (Input) -> Bool { get }
     
     /// The result that is produced when the chain handles the input.
-    var result: (Input) -> Output { get }
+    var process: (Input) -> Output { get }
     
     /// The next chain in the sequence.
-    var next: (any ChainingOfResponsibility)? { get }
-
+    var nextHandler: (any ChainingOfResponsibility)? { get }
+    
     /// Executes the chain of responsibility with the given input.
     /// - Parameter input: The input to be processed by the chain.
     /// - Returns: The output produced by the chain.
@@ -28,9 +28,8 @@ public extension ChainingOfResponsibility {
     /// - Returns: The output value produced by the chain of responsibility.
     /// - Throws: An error if no condition is met or if there is no next case in the chain.
     func execute(input: Input) throws -> Output {
-        if condition(input) { return result(input) }
-        guard let next else { throw ChainOfResponsibilityError.noNextCase }
-        guard let next = next as? ChainOfResponsibility<Input, Output> else {
+        if shouldProcess(input) { return process(input) }
+        guard let next = nextHandler as? ChainOfResponsibility<Input, Output> else {
             throw ChainOfResponsibilityError.noEqualChainOfResponsibility
         }
         return try next.execute(input: input)
@@ -38,32 +37,29 @@ public extension ChainingOfResponsibility {
 }
 
 /// A concrete implementation of the `ChainingOfResponsibility` protocol.
-public struct ChainOfResponsibility<Input, Output>: ChainingOfResponsibility {
-    public let condition: (Input) -> Bool
-    public let result: (Input) -> Output
-    public let next: (any ChainingOfResponsibility)?
-
+public struct ChainOfResponsibility<IncomingData, ResultData>: ChainingOfResponsibility {
+    public let shouldProcess: (IncomingData) -> Bool
+    public let process: (IncomingData) -> ResultData
+    public let nextHandler: (any ChainingOfResponsibility)?
+    
     /// Initializes a new instance of `ChainOfResponsibility`.
     /// - Parameters:
-    ///   - next: The next chain in the sequence.
-    ///   - condition: The condition that determines if the chain should handle the input.
-    ///   - result: The result that is produced when the chain handles the input.
+    ///   - nextHandler: The next chain in the sequence.
+    ///   - shouldProcess: The condition that determines if the chain should handle the input.
+    ///   - process: The result that is produced when the chain handles the input.
     public init(
-        next: (any ChainingOfResponsibility)? = nil,
-        condition: @escaping (Input) -> Bool,
-        result: @escaping (Input) -> Output
+        nextHandler: (any ChainingOfResponsibility)? = nil,
+        shouldProcess: @escaping (IncomingData) -> Bool,
+        process: @escaping (IncomingData) -> ResultData
     ) {
-        self.next = next
-        self.condition = condition
-        self.result = result
+        self.nextHandler = nextHandler
+        self.shouldProcess = shouldProcess
+        self.process = process
     }
 }
 
 /// Errors that can occur during the execution of the chain of responsibility.
 public enum ChainOfResponsibilityError: Error {
-    /// Indicates that there is no next case in the chain.
-    case noNextCase
-    
     /// Indicates that the next chain is not of the same type.
     case noEqualChainOfResponsibility
 }
