@@ -18,7 +18,7 @@ doc:
     generate-documentation --target $(my_framework_name) \
     --disable-indexing \
     --transform-for-static-hosting \
-    --hosting-base-path $(my_framework_name)] \
+    --hosting-base-path $(my_framework_name) \
     --output-path $(doc_path)
 
 clean:
