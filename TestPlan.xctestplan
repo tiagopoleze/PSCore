@@ -15,20 +15,6 @@
     {
       "target" : {
         "containerPath" : "container:",
-        "identifier" : "ChainOfResponsibilityTests",
-        "name" : "ChainOfResponsibilityTests"
-      }
-    },
-    {
-      "target" : {
-        "containerPath" : "container:",
-        "identifier" : "ObserverTests",
-        "name" : "ObserverTests"
-      }
-    },
-    {
-      "target" : {
-        "containerPath" : "container:",
         "identifier" : "PSCoreTests",
         "name" : "PSCoreTests"
       }
