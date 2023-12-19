@@ -2,7 +2,7 @@ bin_path := ./scripts/bin
 doc_path := ./docs
 my_framework_name := PSCore
 
-all: build test doc clean lint
+all: build test clean lint
 
 build:
 	@echo "Building the project..."
