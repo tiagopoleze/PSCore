@@ -6,7 +6,7 @@
 //
 
 import XCTest
-@testable import Observer
+@testable import PSCore
 
 class ObserverTests: XCTestCase {
     func testObserver() throws {
