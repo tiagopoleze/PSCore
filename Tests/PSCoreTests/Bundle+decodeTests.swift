@@ -2,19 +2,17 @@ import XCTest
 @testable import PSCore
 
 final class BundleDecodeTests: XCTestCase {
-    @available(iOS 14.0, macOS 11.0, *)
     func testBundle() {
         XCTAssertThrowsError(try Bundle.module.decode(String.self, from: "here.json"))
-
+        
         guard let person = try? Bundle.module.decode(Person.self, from: "person.json") else {
             XCTFail("Should always have this file.")
             return
         }
-
+        
         XCTAssertTrue(person.isAmazing)
     }
     
-    @available(iOS 14.0, macOS 11.0, *)
     func testDecode() {
         // Given
         let bundle = Bundle.module
@@ -32,9 +30,25 @@ final class BundleDecodeTests: XCTestCase {
             XCTFail("Failed to decode person.json: \(error)")
         }
     }
+    
+    func testNoContentToURL() {
+        // Given
+        let bundle = Bundle.module
+        let url = URL(string: "https://example.com")!
+        
+        XCTAssertThrowsError(try bundle.decode(Person.self, from: url.absoluteString),
+                             "Should throw BundleDecodeError.noContentTo") { error in
+            guard case BundleDecodeError.noValidURL(let url) = error else {
+                XCTFail("Expected BundleDecodeError.noValidURL, but got \(error)")
+                return
+            }
+            
+            XCTAssertEqual(url, url)
+        }
+    }
 }
 
-private struct Person: Decodable {
+struct Person: Decodable {
     let firstName: String
     let lastName: String
     let age: Int

@@ -32,7 +32,6 @@ extension Box: RawRepresentable { }
 extension Box: Equatable where RawValue: Equatable {}
 extension Box: Hashable where RawValue: Hashable {}
 
-@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
 extension Box: Identifiable where RawValue: Identifiable {
     /// The ID type used by the `Box` struct.
     public typealias ID = RawValue.ID
