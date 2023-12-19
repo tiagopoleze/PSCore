@@ -1,31 +1,56 @@
-//
-//  Bundle+decodeTests.swift
-//  
-//
-//  Created by Tiago Ferreira on 26/04/2023.
-//
-
 import XCTest
 @testable import PSCore
 
 final class BundleDecodeTests: XCTestCase {
-    @available(iOS 14.0, macOS 11.0, *)
     func testBundle() {
         XCTAssertThrowsError(try Bundle.module.decode(String.self, from: "here.json"))
-
+        
         guard let person = try? Bundle.module.decode(Person.self, from: "person.json") else {
             XCTFail("Should always have this file.")
             return
         }
-
+        
         XCTAssertTrue(person.isAmazing)
+    }
+    
+    func testDecode() {
+        // Given
+        let bundle = Bundle.module
+        
+        // When
+        do {
+            let person = try bundle.decode(Person.self, from: "person.json")
+            
+            // Then
+            XCTAssertEqual(person.firstName, "Tiago")
+            XCTAssertEqual(person.lastName, "Ferreira")
+            XCTAssertEqual(person.age, 39)
+            XCTAssertTrue(person.isAmazing)
+        } catch {
+            XCTFail("Failed to decode person.json: \(error)")
+        }
+    }
+    
+    func testNoContentToURL() {
+        // Given
+        let bundle = Bundle.module
+        let url = URL(string: "https://example.com")!
+        
+        XCTAssertThrowsError(try bundle.decode(Person.self, from: url.absoluteString),
+                             "Should throw BundleDecodeError.noContentTo") { error in
+            guard case BundleDecodeError.noValidURL(let url) = error else {
+                XCTFail("Expected BundleDecodeError.noValidURL, but got \(error)")
+                return
+            }
+            
+            XCTAssertEqual(url, url)
+        }
     }
 }
 
-private struct Person: Decodable {
+struct Person: Decodable {
     let firstName: String
     let lastName: String
     let age: Int
     let isAmazing: Bool
-
 }

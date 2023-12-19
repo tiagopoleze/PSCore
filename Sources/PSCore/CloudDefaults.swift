@@ -5,33 +5,27 @@ public final class CloudDefaults {
     
     /// A singleton instance of `CloudDefaults` that can be accessed globally.
     public static var shared = CloudDefaults()
+    private var notificationCenter: NotificationCenter?
     private var ignoreLocalChanges = false
 
     private init() { }
 
     deinit {
-        NotificationCenter.default.removeObserver(self)
+        notificationCenter?.removeObserver(self)
     }
 
     /// Starts the cloud defaults sync.
-    public func start() {
-        NotificationCenter
-            .default
-            .addObserver(
-                forName: NSUbiquitousKeyValueStore.didChangeExternallyNotification,
-                object: NSUbiquitousKeyValueStore.default,
-                queue: .main,
-                using: updateLocal
-            )
-
-        NotificationCenter
-            .default
-            .addObserver(
-                forName: UserDefaults.didChangeNotification,
-                object: nil,
-                queue: .main,
-                using: updateRemote
-            )
+    /// - Parameter notificationCenter: The notification center to use for observing changes.
+    public func start(_ notificationCenter: NotificationCenter = .default) {
+        self.notificationCenter = notificationCenter
+        notificationCenter.addObserver(forName: NSUbiquitousKeyValueStore.didChangeExternallyNotification,
+                                       object: NSUbiquitousKeyValueStore.default,
+                                       queue: .main,
+                                       using: updateLocal)
+        notificationCenter.addObserver(forName: UserDefaults.didChangeNotification,
+                                       object: nil,
+                                       queue: .main,
+                                       using: updateRemote)
     }
 
     private func updateRemote(note: Notification) {
