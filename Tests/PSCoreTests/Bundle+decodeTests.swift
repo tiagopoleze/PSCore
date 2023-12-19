@@ -1,10 +1,3 @@
-//
-//  Bundle+decodeTests.swift
-//  
-//
-//  Created by Tiago Ferreira on 26/04/2023.
-//
-
 import XCTest
 @testable import PSCore
 
@@ -20,6 +13,25 @@ final class BundleDecodeTests: XCTestCase {
 
         XCTAssertTrue(person.isAmazing)
     }
+    
+    @available(iOS 14.0, macOS 11.0, *)
+    func testDecode() {
+        // Given
+        let bundle = Bundle.module
+        
+        // When
+        do {
+            let person = try bundle.decode(Person.self, from: "person.json")
+            
+            // Then
+            XCTAssertEqual(person.firstName, "Tiago")
+            XCTAssertEqual(person.lastName, "Ferreira")
+            XCTAssertEqual(person.age, 39)
+            XCTAssertTrue(person.isAmazing)
+        } catch {
+            XCTFail("Failed to decode person.json: \(error)")
+        }
+    }
 }
 
 private struct Person: Decodable {
@@ -27,5 +39,4 @@ private struct Person: Decodable {
     let lastName: String
     let age: Int
     let isAmazing: Bool
-
 }
