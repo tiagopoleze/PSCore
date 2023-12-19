@@ -15,6 +15,7 @@ public final class CloudDefaults {
     }
 
     /// Starts the cloud defaults sync.
+    /// - Parameter notificationCenter: The notification center to use for observing changes.
     public func start(_ notificationCenter: NotificationCenter = .default) {
         self.notificationCenter = notificationCenter
         notificationCenter.addObserver(forName: NSUbiquitousKeyValueStore.didChangeExternallyNotification,
