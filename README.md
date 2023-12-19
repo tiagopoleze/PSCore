@@ -1,20 +1,20 @@
 # PSCore
 
-PSCore é um pacote Swift que inclui implementações para o padrão de design Observer e Chain of Responsibility, além de várias outras funcionalidades.
+PSCore is a Swift package that includes implementations for the Observer and Chain of Responsibility design patterns, in addition to various other functionalities.
 
-## Instalação
+## Install
 
-Para instalar o PSCore, você precisa adicionar o seguinte ao seu arquivo Package.swift:
+To install PSCore, you need to add the following to your Package.swift file:
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/tiagopoleze/PSCore.git", from: "1.0.0")
+    .package(url: "https://github.com/tiagopoleze/PSCore.git", branch: "main")
 ]
 ```
 
-Uso
-Observer
-Para usar o padrão Observer, você precisa fazer o seguinte:
+## Using
+### Observer
+To use the Observer pattern, you need to do the following:
 ```
 struct TestAction: ObserverEvent {
     var eventData: Bool
@@ -39,8 +39,8 @@ observable.register(observer: observer)
 observable.sendToAll(event: TestAction(eventData: true))
 ```
 
-Chain of Responsibility
-Para usar o padrão Chain of Responsibility, você precisa fazer o seguinte:
+### Chain of Responsibility
+To use the Chain of Responsibility pattern, you need to do the following:
 ```
 let first = ChainOfResponsibility<Int, Int> { number in
     number == 10
@@ -58,20 +58,20 @@ let result = try second.execute(input: 10)
 let result2 = try second.execute(input: 5)
 ```
 
-Testes
-Para executar os testes, você pode usar o seguinte comando:
+## Tests
+To run the tests, you can use the following command:
 ```
 swift test
 ```
 
-Linting
-Para linting, usamos SwiftLint. Você pode executar o linter com o seguinte comando:
+## Linting
+For linting, we use SwiftLint. You can run the linter with the following command:
 ```
 ./scripts/bin/swiftlint --format --quiet --config ./.swiftlint.yml
 ```
 
-Contribuindo
-Contribuições são bem-vindas! Por favor, leia nosso guia de contribuição para começar.
+## Contributions
+Contributions are welcome! Please read our contribution guide to get started.
 
-Licença
-Este projeto está licenciado sob a licença MIT - veja o arquivo LICENSE para detalhes.
+## License
+This project is licensed under the MIT License - see the LICENSE file for details.
