@@ -14,7 +14,12 @@ test:
 
 doc:
 	@echo "Generating documentation..."
-	swift package --allow-writing-to-directory $(doc_path) generate-documentation --target $(my_framework_name) --output-path ./docs  --transform-for-static-hosting
+	swift package --allow-writing-to-directory $(doc_path) \
+    generate-documentation --target $(my_framework_name) \
+    --disable-indexing \
+    --transform-for-static-hosting \
+    --hosting-base-path $(my_framework_name)] \
+    --output-path $(doc_path)
 
 clean:
 	@echo "Cleaning the project..."

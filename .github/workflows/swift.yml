@@ -25,7 +25,7 @@ jobs:
     - name: Run Make
       run: |
         make all
-    
+
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
       with:
