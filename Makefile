@@ -1,6 +1,8 @@
 bin_path := ./scripts/bin
+doc_path := ./docs
+my_framework_name := PSCore
 
-all: build test clean lint
+all: build test doc clean lint
 
 build:
 	@echo "Building the project..."
@@ -9,6 +11,10 @@ build:
 test:
 	@echo "Running tests..."
 	swift test
+
+doc:
+	@echo "Generating documentation..."
+	swift package --allow-writing-to-directory $(doc_path) generate-documentation --target $(my_framework_name) --output-path ./docs  --transform-for-static-hosting --hosting-base-path $(my_framework_name)
 
 clean:
 	@echo "Cleaning the project..."
